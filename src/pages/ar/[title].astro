@@ -1,0 +1,171 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const { title } = Astro.params;
+
+export async function getStaticPaths() {
+  return [
+    { params: { title: "celula-animal" } },
+    // ...
+  ];
+}
+---
+
+<Layout title={title!}>
+  <main class="h-full bg-primary">
+    <section class="h-full relative px-4 pb-4 flex flex-col">
+      <img
+        src="/ar-bg-leaves.png"
+        alt="Fondo de hojas"
+        class="absolute z-10 top-0 left-0 w-full h-full pointer-events-none"
+      />
+      <nav class="flex items-center py-3 justify-start">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-10 text-light"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+        </svg>
+      </nav>
+      <div class="relative block w-full h-[calc(100%-16px)] bg-light">
+        <a-scene
+          vr-mode-ui="enabled: false;"
+          loading-screen="enabled: false;"
+          renderer="logarithmicDepthBuffer: true;"
+          arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+          id="scene"
+          gesture-detector
+          embedded
+        >
+          <a-assets>
+            <a-asset-item id="celula-animal" src="/assets/celula-animal.glb"
+            ></a-asset-item>
+          </a-assets>
+
+          <a-marker
+            id="celula-animal-marker"
+            type="pattern"
+            preset="custom"
+            url="/assets/celula-animal.patt"
+            raycaster="objects: .clickable"
+            emitevents="true"
+            cursor="fuse: false; rayOrigin: mouse;"
+          >
+            <a-entity
+              id="bowser-modal"
+              position="-1 -2 -1"
+              rotation="0 90 -90"
+              scale="10 10 20"
+              animation-mixer="loop: repeat"
+              gltf-model="#celula-animal"
+              class="clickable"
+              gesture-handler></a-entity>
+          </a-marker>
+          <a-entity camera></a-entity>
+        </a-scene>
+      </div>
+      <div
+        class="w-full flex gap-4 p-4 absolute items-center h-40 bg-primary z-50 bottom-0 left-0"
+      >
+        <button id="prevAnimationBtn" class="font-bold text-xl text-light">
+          {"<"}
+        </button>
+        <div class="h-full">
+          <img
+            src="/celula-animal-marker.png"
+            alt="Imagen de sección"
+            class="h-full"
+          />
+        </div>
+        <div class="flex-1 h-full flex gap-1 flex-col overflow-y-auto">
+          <h4 class="text-tertiary leading-tight text-xl font-bold">
+            Célula Animal
+          </h4>
+          <p class="text-light/60 text-sm">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
+            soluta, impedit neque repudiandae reprehenderit amet quibusdam
+            consectetur beatae fugiat officia.
+          </p>
+        </div>
+        <button id="nextAnimationBtn" class="font-bold text-xl text-light">
+          {">"}
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function waitForElm(selector: string) {
+      return new Promise((resolve) => {
+        if (document.querySelector(selector)) {
+          return resolve(document.querySelector(selector));
+        }
+
+        const observer = new MutationObserver((mutations) => {
+          if (document.querySelector(selector)) {
+            observer.disconnect();
+            resolve(document.querySelector(selector));
+          }
+        });
+
+        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+        });
+      });
+    }
+
+    window.addEventListener("load", async () => {
+      const video = (await waitForElm("video")) as HTMLElement;
+      const scene = document.querySelector("a-scene")!;
+
+      video.style.width = scene.clientWidth.toString();
+      video.style.height = scene.clientHeight.toString();
+      scene.appendChild(video);
+    });
+  </script>
+
+  <script>
+    const nextAnimationBtn = document.getElementById("nextAnimationBtn");
+    const prevAnimationBtn = document.getElementById("prevAnimationBtn");
+
+    nextAnimationBtn?.addEventListener("click", () => {
+      console.log("next animation");
+    });
+
+    prevAnimationBtn?.addEventListener("click", () => {
+      console.log("prev animation");
+    });
+  </script>
+
+  <style>
+    a-scene {
+      display: block !important;
+      position: relative !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .a-canvas {
+      z-index: 50 !important;
+    }
+
+    video {
+      display: inline-block !important;
+      /* width: 100% !important; */
+      /* height: 100% !important; */
+      position: relative !important;
+      z-index: 1 !important;
+      margin: 0 !important;
+      object-fit: cover !important;
+    }
+  </style>
+</Layout>
