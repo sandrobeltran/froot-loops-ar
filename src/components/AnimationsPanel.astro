@@ -1,0 +1,200 @@
+---
+import { type IAnimation } from "../types/customInterfaces";
+
+interface Props {
+  animations: IAnimation[];
+}
+
+const { animations } = Astro.props;
+---
+
+<div
+  class="w-full flex gap-0 p-4 absolute items-center px-6 h-40 bg-gradient-to-b from-tertiary to-secondary z-50 bottom-0 left-0"
+>
+  <button
+    id="prevAnimationBtn"
+    class="hidden z-20 absolute left-1 font-bold text-xl text-light"
+  >
+    <svg
+      class="h-10"
+      viewBox="0 0 27 27"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="13.3238"
+        cy="13.3238"
+        r="13.3238"
+        transform="matrix(-1 0 0 1 26.6465 0)"
+        fill="white"></circle>
+      <g filter="url(#filter0_d_406_4631)">
+        <path
+          d="M16.6535 6.80081L16.6535 19.2922C16.6532 19.4187 16.6215 19.5427 16.5619 19.6508C16.5023 19.7589 16.417 19.8471 16.3153 19.9058C16.2136 19.9646 16.0993 19.9917 15.9846 19.9842C15.8699 19.9767 15.7593 19.9349 15.6646 19.8634L7.47062 13.6177C7.13089 13.3588 7.13089 12.7356 7.47062 12.4761L15.6646 6.23037C15.7591 6.15808 15.8698 6.11568 15.9846 6.10779C16.0995 6.0999 16.2141 6.12682 16.3161 6.18562C16.418 6.24442 16.5033 6.33285 16.5628 6.44131C16.6223 6.54977 16.6537 6.67411 16.6535 6.80081Z"
+          fill="#1E2C56"></path>
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_406_4631"
+          x="3.21582"
+          y="4.10645"
+          width="17.4375"
+          height="21.8789"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"></feColorMatrix>
+          <feOffset dy="2"></feOffset>
+          <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+          <feComposite in2="hardAlpha" operator="out"></feComposite>
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_406_4631"></feBlend>
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_406_4631"
+            result="shape"></feBlend>
+        </filter>
+      </defs>
+    </svg>
+  </button>
+
+  <!-- SLIDER -->
+  <div class="w-full overflow-x-hidden">
+    <!-- WRAPPER -->
+    <div
+      id="animationWrapper"
+      style={{ minWidth: `${animations.length}%` }}
+      class="flex transition-transform"
+    >
+      {
+        animations.map((animation) => (
+          <div class="flex-1 flex min-w-full h-full gap-0 items-center">
+            <div class="h-full flex-1">
+              <img
+                src="/img/animations-panel/idle.png"
+                alt="Imagen de sección"
+                class="h-full"
+              />
+            </div>
+            <div class="flex-1 h-full flex gap-1 flex-col overflow-y-auto">
+              <h4 class="text-light leading-tight text-xl font-bold">
+                {animation.label}
+              </h4>
+              <p class="text-light/80 text-sm max-w-[90%]">
+                {animation.description}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <button
+    id="nextAnimationBtn"
+    class="z-20 absolute right-1 font-bold text-xl text-light"
+  >
+    <svg
+      class="h-10 -scale-x-100"
+      viewBox="0 0 27 27"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="13.3238"
+        cy="13.3238"
+        r="13.3238"
+        transform="matrix(-1 0 0 1 26.6465 0)"
+        fill="white"></circle>
+      <g filter="url(#filter0_d_406_4631)">
+        <path
+          d="M16.6535 6.80081L16.6535 19.2922C16.6532 19.4187 16.6215 19.5427 16.5619 19.6508C16.5023 19.7589 16.417 19.8471 16.3153 19.9058C16.2136 19.9646 16.0993 19.9917 15.9846 19.9842C15.8699 19.9767 15.7593 19.9349 15.6646 19.8634L7.47062 13.6177C7.13089 13.3588 7.13089 12.7356 7.47062 12.4761L15.6646 6.23037C15.7591 6.15808 15.8698 6.11568 15.9846 6.10779C16.0995 6.0999 16.2141 6.12682 16.3161 6.18562C16.418 6.24442 16.5033 6.33285 16.5628 6.44131C16.6223 6.54977 16.6537 6.67411 16.6535 6.80081Z"
+          fill="#1E2C56"></path>
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_406_4631"
+          x="3.21582"
+          y="4.10645"
+          width="17.4375"
+          height="21.8789"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"></feColorMatrix>
+          <feOffset dy="2"></feOffset>
+          <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+          <feComposite in2="hardAlpha" operator="out"></feComposite>
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_406_4631"></feBlend>
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_406_4631"
+            result="shape"></feBlend>
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const nextAnimationBtn = document.getElementById("nextAnimationBtn")!;
+  const prevAnimationBtn = document.getElementById("prevAnimationBtn")!;
+  const animationWrapper = document.getElementById("animationWrapper")!;
+
+  let index = 0;
+  const amountOfAnimations = animationWrapper!.childElementCount;
+  console.log(amountOfAnimations);
+
+  function updateWrapperTranslate(index: number) {
+    let translate = `translateX(-${index * 100}%)`;
+
+    animationWrapper!.style.transform = translate;
+  }
+
+  function checkDisplays() {
+    if (index >= amountOfAnimations-1) nextAnimationBtn.style.display = "none";
+    else nextAnimationBtn.style.display = "inline-block";
+
+    if (index <= 0) prevAnimationBtn.style.display = "none";
+    else prevAnimationBtn.style.display = "inline-block";
+  }
+
+  nextAnimationBtn.addEventListener("click", () => {
+    if (index >= amountOfAnimations - 1) return;
+
+    index++;
+
+    checkDisplays();
+    updateWrapperTranslate(index);
+  });
+
+  prevAnimationBtn.addEventListener("click", () => {
+    if (index <= 0) return;
+
+    index--;
+
+    checkDisplays();
+    updateWrapperTranslate(index);
+  });
+</script>

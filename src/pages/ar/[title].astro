@@ -1,5 +1,7 @@
 ---
+import AnimationsPanel from "../../components/AnimationsPanel.astro";
 import Layout from "../../layouts/Layout.astro";
+import type { IAnimation } from "../../types/customInterfaces";
 
 const { title } = Astro.params;
 
@@ -9,6 +11,21 @@ export async function getStaticPaths() {
     // ...
   ];
 }
+
+const animations: IAnimation[] = [
+  {
+    clip: "idle",
+    loop: true,
+    label: "Idle",
+    description: "lorem ipsum dolor sit amet",
+  },
+  {
+    clip: "organelo",
+    loop: true,
+    label: "Organelo",
+    description: "lorem ipsum dolor sit amet",
+  },
+];
 ---
 
 <Layout title={title!}>
@@ -71,101 +88,63 @@ export async function getStaticPaths() {
           <a-entity camera></a-entity>
         </a-scene>
       </div>
-      <div
-        class="w-full flex gap-4 p-4 absolute items-center h-40 bg-primary z-50 bottom-0 left-0"
-      >
-        <button id="prevAnimationBtn" class="font-bold text-xl text-light">
-          {"<"}
-        </button>
-        <div class="h-full">
-          <img
-            src="/celula-animal-marker.png"
-            alt="Imagen de sección"
-            class="h-full"
-          />
-        </div>
-        <div class="flex-1 h-full flex gap-1 flex-col overflow-y-auto">
-          <h4 class="text-tertiary leading-tight text-xl font-bold">
-            Célula Animal
-          </h4>
-          <p class="text-light/60 text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-            soluta, impedit neque repudiandae reprehenderit amet quibusdam
-            consectetur beatae fugiat officia.
-          </p>
-        </div>
-        <button id="nextAnimationBtn" class="font-bold text-xl text-light">
-          {">"}
-        </button>
-      </div>
+      <AnimationsPanel animations={animations} />
     </section>
   </main>
-
-  <script>
-    function waitForElm(selector: string) {
-      return new Promise((resolve) => {
-        if (document.querySelector(selector)) {
-          return resolve(document.querySelector(selector));
-        }
-
-        const observer = new MutationObserver((mutations) => {
-          if (document.querySelector(selector)) {
-            observer.disconnect();
-            resolve(document.querySelector(selector));
-          }
-        });
-
-        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true,
-        });
-      });
-    }
-
-    window.addEventListener("load", async () => {
-      const video = (await waitForElm("video")) as HTMLElement;
-      const scene = document.querySelector("a-scene")!;
-
-      video.style.width = scene.clientWidth.toString();
-      video.style.height = scene.clientHeight.toString();
-      scene.appendChild(video);
-    });
-  </script>
-
-  <script>
-    const nextAnimationBtn = document.getElementById("nextAnimationBtn");
-    const prevAnimationBtn = document.getElementById("prevAnimationBtn");
-
-    nextAnimationBtn?.addEventListener("click", () => {
-      console.log("next animation");
-    });
-
-    prevAnimationBtn?.addEventListener("click", () => {
-      console.log("prev animation");
-    });
-  </script>
-
-  <style>
-    a-scene {
-      display: block !important;
-      position: relative !important;
-      width: 100% !important;
-      height: 100% !important;
-    }
-
-    .a-canvas {
-      z-index: 50 !important;
-    }
-
-    video {
-      display: inline-block !important;
-      /* width: 100% !important; */
-      /* height: 100% !important; */
-      position: relative !important;
-      z-index: 1 !important;
-      margin: 0 !important;
-      object-fit: cover !important;
-    }
-  </style>
 </Layout>
+
+<script>
+  function waitForElm(selector: string) {
+    return new Promise((resolve) => {
+      if (document.querySelector(selector)) {
+        return resolve(document.querySelector(selector));
+      }
+
+      const observer = new MutationObserver((mutations) => {
+        if (document.querySelector(selector)) {
+          observer.disconnect();
+          resolve(document.querySelector(selector));
+        }
+      });
+
+      // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+    });
+  }
+
+  window.addEventListener("DOMContentLoaded", async () => {
+    const video = (await waitForElm("video")) as HTMLElement;
+    const scene = document.querySelector("a-scene")!;
+
+    video.style.display = "unset !important";
+    video.style.width = `${scene.clientWidth}px !important`;
+    video.style.height = `${scene.clientHeight}px !important`;
+    scene.appendChild(video);
+  });
+</script>
+
+<style is:inline>
+  a-scene {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .a-canvas {
+    z-index: 50 !important;
+  }
+
+  video {
+    display: inline-block !important;
+    /*width: 100% !important;
+      height: 100% !important;*/
+    position: relative !important;
+    z-index: 1 !important;
+    margin: 0 !important;
+    object-fit: cover !important;
+  }
+</style>
