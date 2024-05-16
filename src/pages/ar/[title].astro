@@ -2,6 +2,7 @@
 import AnimationsPanel from "../../components/AnimationsPanel.astro";
 import Layout from "../../layouts/Layout.astro";
 import type { IAnimation } from "../../types/customInterfaces";
+import { animationsData } from "../../data/animationsData";
 
 const { title } = Astro.params;
 
@@ -12,20 +13,7 @@ export async function getStaticPaths() {
   ];
 }
 
-const animations: IAnimation[] = [
-  {
-    clip: "idle",
-    loop: true,
-    label: "Idle",
-    description: "lorem ipsum dolor sit amet",
-  },
-  {
-    clip: "organelo",
-    loop: true,
-    label: "Organelo",
-    description: "lorem ipsum dolor sit amet",
-  },
-];
+const animations: IAnimation[] = animationsData[title];
 ---
 
 <Layout title={title!}>
@@ -58,34 +46,38 @@ const animations: IAnimation[] = [
           renderer="logarithmicDepthBuffer: true;"
           arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
           id="scene"
-          gesture-detector
           embedded
+          gesture-detector
         >
           <a-assets>
             <a-asset-item id="celula-animal" src="/assets/celula-animal.glb"
             ></a-asset-item>
           </a-assets>
-
+          <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
           <a-marker
             id="celula-animal-marker"
             type="pattern"
             preset="custom"
             url="/assets/celula-animal.patt"
-            raycaster="objects: .clickable"
             emitevents="true"
+            smooth="true"
+            smoothCount="10"
+            smoothTolerance=".01"
+            smoothThreshold="5"
+            raycaster="objects: .clickable"
             cursor="fuse: false; rayOrigin: mouse;"
           >
             <a-entity
-              id="bowser-modal"
-              position="-1 -2 -1"
-              rotation="0 90 -90"
-              scale="10 10 20"
-              animation-mixer="loop: repeat"
+              id="animatedModel"
+              position="0 0.5 -0.1"
+              rotation="0 90 0"
+              scale="7 7 14"
+              animation-mixer="clip: *;loop: repeat"
               gltf-model="#celula-animal"
               class="clickable"
-              gesture-handler="minScale: 0.25; maxScale: 10"></a-entity>
+              gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
+            ></a-entity>
           </a-marker>
-          <a-entity camera></a-entity>
         </a-scene>
       </div>
       <AnimationsPanel animations={animations} />
@@ -126,7 +118,7 @@ const animations: IAnimation[] = [
   });
 </script>
 
-<script>
+<script is:inline>
   const sceneEl = document.getElementById("scene");
   let isMarkerVisible = false;
 
@@ -141,7 +133,7 @@ const animations: IAnimation[] = [
   sceneEl.addEventListener("twofingermove", handleScale);
 
   function handleRotation(event) {
-    console.log(event)
+    console.log(event);
     if (isMarkerVisible) {
       el.object3D.rotation.y += event.detail.positionChange.x * rotationFactor;
 

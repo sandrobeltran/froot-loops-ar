@@ -9,11 +9,12 @@ const { animations } = Astro.props;
 ---
 
 <div
-  class="w-full flex gap-0 p-4 absolute items-center px-6 h-40 bg-gradient-to-b from-tertiary to-secondary z-50 bottom-0 left-0"
+  id="animationsPanel"
+  class="w-full flex gap-0 p-4 absolute items-center px-6 bg-gradient-to-b from-tertiary to-secondary z-50 bottom-[150px] left-0"
 >
   <button
     id="prevAnimationBtn"
-    class="hidden z-20 absolute left-1 font-bold text-xl text-light"
+    class="z-20 absolute left-1 font-bold text-xl text-light"
   >
     <svg
       class="h-10"
@@ -78,7 +79,10 @@ const { animations } = Astro.props;
     >
       {
         animations.map((animation) => (
-          <div class="flex-1 flex min-w-full h-full gap-0 items-center">
+          <div
+            data-clip={animation.clip}
+            class="flex-1 flex min-w-full h-full gap-0 items-center"
+          >
             <div class="h-full flex-1">
               <img
                 src="/img/animations-panel/idle.png"
@@ -161,6 +165,8 @@ const { animations } = Astro.props;
   const nextAnimationBtn = document.getElementById("nextAnimationBtn")!;
   const prevAnimationBtn = document.getElementById("prevAnimationBtn")!;
   const animationWrapper = document.getElementById("animationWrapper")!;
+  const animations = Array.from(animationWrapper.querySelectorAll("&>div"));
+  const model = document.getElementById("animatedModel");
 
   let index = 0;
   const amountOfAnimations = animationWrapper!.childElementCount;
@@ -173,11 +179,17 @@ const { animations } = Astro.props;
   }
 
   function checkDisplays() {
-    if (index >= amountOfAnimations-1) nextAnimationBtn.style.display = "none";
-    else nextAnimationBtn.style.display = "inline-block";
+    if (index >= amountOfAnimations - 1) {
+      nextAnimationBtn.style.display = "none";
+    } else {
+      nextAnimationBtn.style.display = "inline-block";
+    }
 
-    if (index <= 0) prevAnimationBtn.style.display = "none";
-    else prevAnimationBtn.style.display = "inline-block";
+    if (index <= 0) {
+      prevAnimationBtn.style.display = "none";
+    } else {
+      prevAnimationBtn.style.display = "inline-block";
+    }
   }
 
   nextAnimationBtn.addEventListener("click", () => {
@@ -187,6 +199,7 @@ const { animations } = Astro.props;
 
     checkDisplays();
     updateWrapperTranslate(index);
+    updateAnimationMixer();
   });
 
   prevAnimationBtn.addEventListener("click", () => {
@@ -196,5 +209,24 @@ const { animations } = Astro.props;
 
     checkDisplays();
     updateWrapperTranslate(index);
+    updateAnimationMixer();
   });
+
+  function updateAnimationMixer() {
+    const clip = animations[index].getAttribute("data-clip") || "NoClip";
+
+    if (model) {
+      model.setAttribute("animation-mixer", `clip: ${clip}; loop: repeat`);
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    checkDisplays();
+    updateWrapperTranslate(index);
+    updateAnimationMixer();
+  });
+</script>
+
+<script>
+
 </script>
