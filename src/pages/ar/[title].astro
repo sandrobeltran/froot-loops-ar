@@ -3,6 +3,7 @@ import AnimationsPanel from "../../components/AnimationsPanel.astro";
 import Layout from "../../layouts/Layout.astro";
 import type { IAnimation } from "../../types/customInterfaces";
 import { animationsData } from "../../data/animationsData";
+import RotationSlider from "../../components/RotationSlider.astro";
 
 const { title } = Astro.params;
 
@@ -50,15 +51,15 @@ const animations: IAnimation[] = animationsData[title];
           gesture-detector
         >
           <a-assets>
-            <a-asset-item id="celula-animal" src="/assets/celula-animal.glb"
+            <a-asset-item id="celula-animal" src="/assets/celula-animal/model.glb"
             ></a-asset-item>
           </a-assets>
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
           <a-marker
-            id="celula-animal-marker"
+            id="celulaAnimalMarker"
             type="pattern"
             preset="custom"
-            url="/assets/celula-animal.patt"
+            url="/assets/celula-animal/marker.patt"
             emitevents="true"
             smooth="true"
             smoothCount="10"
@@ -71,7 +72,7 @@ const animations: IAnimation[] = animationsData[title];
               id="animatedModel"
               position="0 0.5 -0.1"
               rotation="0 90 0"
-              scale="7 7 14"
+              scale="12 6 12"
               animation-mixer="clip: *;loop: repeat"
               gltf-model="#celula-animal"
               class="clickable"

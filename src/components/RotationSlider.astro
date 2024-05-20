@@ -1,0 +1,109 @@
+---
+interface Props {}
+
+const {} = Astro.props;
+---
+
+<div
+  id="rotationSlider"
+  class="relative gap-2 px-4 py-5 flex items-center justify-center w-full z-[99999]"
+>
+  <p class="absolute left-6 text-[.75rem] font-medium text-zinc-100/50">0°</p>
+  <input
+    type="range"
+    name="rotation"
+    id="rotationInput"
+    min="-180"
+    max="180"
+    value="0"
+    step="1"
+  />
+  <p class="absolute right-6 text-[.75rem] font-medium text-zinc-100/50">
+    360°
+  </p>
+</div>
+
+<style>
+  input[type="range"] {
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /***** Track Styles *****/
+  /***** Chrome, Safari, Opera, and Edge Chromium *****/
+  input[type="range"]::-webkit-slider-runnable-track {
+    background: #053a5f;
+    height: 1.3rem;
+    border-radius: 1rem;
+  }
+
+  /******** Firefox ********/
+  input[type="range"]::-moz-range-track {
+    background: #053a5f;
+    height: 1rem;
+    border-radius: 1rem;
+  }
+
+  /***** Thumb Styles *****/
+  /***** Chrome, Safari, Opera, and Edge Chromium *****/
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: calc(1.3rem / 2 - 2rem / 2); /* Centers thumb on the track */
+    background-color: #5cd5eb;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    box-shadow: -2px -2px 6px #121212 inset;
+  }
+  input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: calc(1.3rem / 2 - 2rem / 2); /* Centers thumb on the track */
+    background-color: #5cd5eb;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    box-shadow: -2px -2px 6px #121212 inset;
+  }
+</style>
+
+<script>
+  function degToRad(deg: number) {
+    return (deg * Math.PI) / 180;
+  }
+
+  const celulaAnimalMarker = document.getElementById(
+    "celulaAnimalMarker"
+  ) as HTMLElement;
+  const rotationSlider = document.getElementById(
+    "rotationSlider"
+  ) as HTMLElement;
+  const rotationInput = document.getElementById(
+    "rotationInput"
+  ) as HTMLInputElement;
+  const entity = celulaAnimalMarker.querySelector("a-entity") as any;
+
+  let initialRotation = entity.object3D.rotation;
+
+  window.addEventListener("DOMContentLoaded", () => {
+    rotationSlider.style.display = "none";
+  });
+
+  celulaAnimalMarker.addEventListener("markerFound", () => {
+    rotationSlider.style.display = "flex";
+  });
+  celulaAnimalMarker.addEventListener("markerLost", () => {
+    rotationSlider.style.display = "none";
+  });
+
+  rotationInput.addEventListener("input", (e) => {
+    const amount = parseInt((e.target as HTMLInputElement).value);
+
+    const rads = degToRad(amount);
+    entity.object3D.rotation.y = degToRad(90) + rads;
+    // entity.object3D.scale.set(7, 7, 14);
+  });
+</script>
