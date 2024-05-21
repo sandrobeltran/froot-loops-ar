@@ -9,8 +9,36 @@ const { title } = Astro.params;
 
 export async function getStaticPaths() {
   return [
-    { params: { title: "celula-animal" } },
-    // ...
+    {
+      params: { title: "celula-animal" },
+    },
+    {
+      params: { title: "celula-eucariota" },
+    },
+    {
+      params: { title: "celula-procariota" },
+    },
+    {
+      params: { title: "celula-vegetal" },
+    },
+    {
+      params: { title: "celula-sanguinea" },
+    },
+    {
+      params: { title: "celula-muscular" },
+    },
+    {
+      params: { title: "neurona" },
+    },
+    {
+      params: { title: "piel" },
+    },
+    {
+      params: { title: "celula-osea" },
+    },
+    {
+      params: { title: "celula-reproductiva" },
+    },
   ];
 }
 
@@ -25,20 +53,27 @@ const animations: IAnimation[] = animationsData[title];
         alt="Fondo de hojas"
         class="absolute z-10 top-0 left-0 w-full h-full pointer-events-none"
       />
-      <nav class="flex items-center py-3 justify-start">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-10 text-light"
+      <nav class="relative z-50 flex items-center py-3 justify-start">
+        <a
+          href="#"
+          id="goBackAnchor"
+          class="flex gap-0 items-center text-light underline"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"></path>
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-10"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+          </svg>
+          Volver
+        </a>
       </nav>
       <div class="relative block w-full h-[calc(100%-16px)] bg-light">
         <a-scene
@@ -51,8 +86,9 @@ const animations: IAnimation[] = animationsData[title];
           gesture-detector
         >
           <a-assets>
-            <a-asset-item id="celula-animal" src="/assets/celula-animal/model.glb"
-            ></a-asset-item>
+            <a-asset-item
+              id="celula-animal"
+              src="/assets/celula-animal/model.glb"></a-asset-item>
           </a-assets>
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
           <a-marker
@@ -107,10 +143,17 @@ const animations: IAnimation[] = animationsData[title];
       });
     });
   }
+  const goBackAnchor = document.getElementById(
+    "goBackAnchor"
+  ) as HTMLAnchorElement;
 
   window.addEventListener("DOMContentLoaded", async () => {
     const video = (await waitForElm("video")) as HTMLElement;
     const scene = document.querySelector("a-scene")!;
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+
+    goBackAnchor.href = params["cb_url"] || "#";
 
     video.style.display = "unset !important";
     video.style.width = `${scene.clientWidth}px !important`;

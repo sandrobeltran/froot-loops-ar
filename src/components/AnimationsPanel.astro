@@ -7,13 +7,17 @@ interface Props {
 }
 
 const { animations } = Astro.props;
+const { title } = Astro.params;
 ---
 
-<div class="w-full gap-0 p-4 absolute z-[9999] bottom-[10.4%] left-0">
+<div
+  id="slidersWrapper"
+  class="w-full gap-0 p-4 absolute z-[9999] bottom-0 left-0"
+>
   <RotationSlider />
   <div
     id="animationsPanel"
-    class="w-full flex gap-0 p-4 items-center px-6 bg-gradient-to-b from-tertiary to-secondary z-50 bottom-[12.2%] left-0"
+    class="w-full flex gap-0 p-4 items-center px-6 bg-gradient-to-b from-tertiary to-secondary z-50 left-0 justify-center"
   >
     <button
       id="prevAnimationBtn"
@@ -79,7 +83,7 @@ const { animations } = Astro.props;
       <div
         id="animationWrapper"
         style={{ minWidth: `${animations.length}%` }}
-        class="flex transition-transform"
+        class="flex transition-transform items-center"
       >
         {
           animations.map((animation) => (
@@ -87,18 +91,27 @@ const { animations } = Astro.props;
               data-clip={animation.clip}
               class="flex-1 flex min-w-full h-full gap-0 items-center"
             >
-              <div class="h-full flex-1">
-                <img
-                  src="/img/animations-panel/idle.png"
-                  alt="Imagen de sección"
-                  class="h-full"
-                />
-              </div>
-              <div class="flex-1 h-full flex gap-1 flex-col overflow-y-auto">
+              {animation.image ? (
+                <div class="h-full flex-1">
+                  <img
+                    src={`/img/animations-panel/${title}/${animation.image}`}
+                    alt="Imagen de sección"
+                    class="h-full"
+                  />
+                </div>
+              ) : null}
+              <div
+                class="flex-1 h-full flex gap-1 flex-col overflow-y-auto"
+                style={
+                  !animation.image
+                    ? { textAlign: "center", alignItems: "center" }
+                    : {}
+                }
+              >
                 <h4 class="text-light leading-tight text-xl font-bold">
                   {animation.label}
                 </h4>
-                <p class="text-light/80 text-sm max-w-[90%]">
+                <p class="text-light/80 max-h-28 text-sm max-w-[90%]">
                   {animation.description}
                 </p>
               </div>
@@ -232,4 +245,14 @@ const { animations } = Astro.props;
   });
 </script>
 
-<script></script>
+<script>
+  const slidersWrapper = document.getElementById("slidersWrapper");
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const isBrave = (navigator as any).brave;
+
+    if (isBrave && slidersWrapper) {
+      slidersWrapper.style.bottom = "10.4%";
+    }
+  });
+</script>
