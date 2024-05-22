@@ -186,6 +186,8 @@ const { title } = Astro.params;
   const animationWrapper = document.getElementById("animationWrapper")!;
   const animations = Array.from(animationWrapper.querySelectorAll("&>div"));
   const model = document.getElementById("animatedModel");
+  let canSlide = true;
+  let coolDownTime = 800;
 
   let index = 0;
   const amountOfAnimations = animationWrapper!.childElementCount;
@@ -194,6 +196,16 @@ const { title } = Astro.params;
     let translate = `translateX(-${index * 100}%)`;
 
     animationWrapper!.style.transform = translate;
+
+    canSlide = false;
+    let timer: ReturnType<typeof setTimeout>;
+
+      console.log(canSlide)
+
+    timer = setTimeout(() => {
+      canSlide = true;
+      clearTimeout(timer);
+    }, coolDownTime);
   }
 
   function checkDisplays() {
@@ -211,6 +223,7 @@ const { title } = Astro.params;
   }
 
   nextAnimationBtn.addEventListener("click", () => {
+    if (!canSlide) return;
     if (index >= amountOfAnimations - 1) return;
 
     index++;
@@ -221,6 +234,7 @@ const { title } = Astro.params;
   });
 
   prevAnimationBtn.addEventListener("click", () => {
+    if (!canSlide) return;
     if (index <= 0) return;
 
     index--;

@@ -8,19 +8,45 @@ const {} = Astro.props;
   id="rotationSlider"
   class="relative gap-2 px-4 py-5 flex items-center justify-center w-full z-[99999]"
 >
-  <p class="absolute left-6 text-[.75rem] font-medium text-zinc-100/50">0°</p>
-  <input
-    type="range"
-    name="rotation"
-    id="rotationInput"
-    min="-180"
-    max="180"
-    value="0"
-    step="1"
-  />
-  <p class="absolute right-6 text-[.75rem] font-medium text-zinc-100/50">
-    360°
-  </p>
+  <!-- HORIZONTAL SLIDE -->
+  <div class="relative z-10 w-full flex items-center justify-center">
+    <p class="absolute left-6 text-[.75rem] font-medium text-zinc-100/50">0°</p>
+    <input
+      type="range"
+      name="rotation"
+      id="yRotationInput"
+      min="-180"
+      max="180"
+      value="0"
+      step="1"
+    />
+    <p class="absolute right-6 text-[.75rem] font-medium text-zinc-100/50">
+      360°
+    </p>
+  </div>
+
+  <!-- VERTICAL SLIDE -->
+  <div class="absolute z-0 right-0 grid items-start h-48 bottom-0">
+    <div
+      class="-rotate-90 w-60 translate-x-1/3 flex items-center h-fit justify-center"
+    >
+      <p class="absolute left-6 text-[.75rem] font-medium text-zinc-100/50">
+        0°
+      </p>
+      <input
+        type="range"
+        name="rotation"
+        id="xRotationInput"
+        min="-180"
+        max="180"
+        value="0"
+        step="1"
+      />
+      <p class="absolute right-6 text-[.75rem] font-medium text-zinc-100/50">
+        360°
+      </p>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -71,6 +97,8 @@ const {} = Astro.props;
 </style>
 
 <script>
+  let fadesDuration = 300;
+
   function degToRad(deg: number) {
     return (deg * Math.PI) / 180;
   }
@@ -81,29 +109,81 @@ const {} = Astro.props;
   const rotationSlider = document.getElementById(
     "rotationSlider"
   ) as HTMLElement;
-  const rotationInput = document.getElementById(
-    "rotationInput"
+  const yRotationInput = document.getElementById(
+    "yRotationInput"
   ) as HTMLInputElement;
+  const xRotationInput = document.getElementById(
+    "xRotationInput"
+  ) as HTMLInputElement;
+
   const entity = celulaAnimalMarker.querySelector("a-entity") as any;
 
   let initialRotation = entity.object3D.rotation;
 
   window.addEventListener("DOMContentLoaded", () => {
-    rotationSlider.style.display = "none";
+    // rotationSlider.style.display = "none";
+    /* setInterval(() => {
+      celulaAnimalMarker.setAttribute("scale", {
+        x: 1,
+        y: 1,
+        z: 1,
+      } as unknown as string);
+      console.log(celulaAnimalMarker.getAttribute("scale"));
+    }, 100); */
   });
 
-  celulaAnimalMarker.addEventListener("markerFound", () => {
+  celulaAnimalMarker.addEventListener("markerFound", (e) => {
+    const target = e.target as HTMLElement;
+
+    target.setAttribute(
+      "animation",
+      `property: scale; from: 0 0 0; to: 1 1 1; dur: ${fadesDuration}`
+    );
+
     rotationSlider.style.display = "flex";
   });
-  celulaAnimalMarker.addEventListener("markerLost", () => {
-    rotationSlider.style.display = "none";
+  celulaAnimalMarker.addEventListener("markerLost", (e) => {
+    const target = e.target as HTMLElement;
+
+    target.setAttribute(
+      "animation",
+      `property: scale; from: 1 1 1; to: 0 0 0; dur: ${fadesDuration}`
+    );
+
+    (target as any).object3D.visible = true;
+
+    let timer: ReturnType<typeof setTimeout>;
+
+    timer = setTimeout(() => {
+      rotationSlider.style.display = "none";
+      (target as any).object3D.visible = false;
+
+      clearTimeout(timer);
+    }, fadesDuration);
   });
 
-  rotationInput.addEventListener("input", (e) => {
+  yRotationInput.addEventListener("input", (e) => {
     const amount = parseInt((e.target as HTMLInputElement).value);
 
     const rads = degToRad(amount);
     entity.object3D.rotation.y = degToRad(90) + rads;
+    celulaAnimalMarker.setAttribute("scale", {
+      x: 1,
+      y: 1,
+      z: 1,
+    } as unknown as string);
+    // entity.object3D.scale.set(7, 7, 14);
+  });
+  xRotationInput.addEventListener("input", (e) => {
+    const amount = parseInt((e.target as HTMLInputElement).value);
+
+    const rads = degToRad(amount);
+    entity.object3D.rotation.z = degToRad(90) + rads;
+    celulaAnimalMarker.setAttribute("scale", {
+      x: 1,
+      y: 1,
+      z: 1,
+    } as unknown as string);
     // entity.object3D.scale.set(7, 7, 14);
   });
 </script>

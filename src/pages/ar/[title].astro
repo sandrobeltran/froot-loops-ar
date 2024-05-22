@@ -86,9 +86,8 @@ const animations: IAnimation[] = animationsData[title];
           gesture-detector
         >
           <a-assets>
-            <a-asset-item
-              id="celula-animal"
-              src="/assets/celula-animal/model.glb"></a-asset-item>
+            <a-asset-item id="celula-animal" src=`/assets/${title}/model.glb`
+            ></a-asset-item>
           </a-assets>
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
           <a-marker
@@ -98,6 +97,7 @@ const animations: IAnimation[] = animationsData[title];
             url="/assets/celula-animal/marker.patt"
             emitevents="true"
             smooth="true"
+            scale="0 0 0"
             smoothCount="10"
             smoothTolerance=".01"
             smoothThreshold="5"
@@ -108,8 +108,8 @@ const animations: IAnimation[] = animationsData[title];
               id="animatedModel"
               position="0 0.5 -0.1"
               rotation="0 90 0"
-              scale="12 6 12"
-              animation-mixer="clip: *;loop: repeat"
+              scale="10 5 10"
+              animation-mixer="clip:*; loop: repeat"
               gltf-model="#celula-animal"
               class="clickable"
               gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
