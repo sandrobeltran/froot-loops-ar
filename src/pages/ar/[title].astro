@@ -39,6 +39,9 @@ export async function getStaticPaths() {
     {
       params: { title: "celula-reproductiva" },
     },
+    {
+      params: { title: "prueba" },
+    },
   ];
 }
 
@@ -75,7 +78,9 @@ const animations: IAnimation[] = animationsData[title];
           Volver
         </a>
       </nav>
-      <div class="relative block w-full h-[calc(100%-16px)] bg-light">
+      <div
+        class="overflow-hidden relative block w-full h-[calc(100%-16px)] bg-light"
+      >
         <a-scene
           vr-mode-ui="enabled: false;"
           loading-screen="enabled: false;"
@@ -89,7 +94,17 @@ const animations: IAnimation[] = animationsData[title];
             <a-asset-item id="celula-animal" src=`/assets/${title}/model.glb`
             ></a-asset-item>
           </a-assets>
-          <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+          <a-camera
+            scale="1 1 1"
+            position="0 0 0"
+            look-controls="enabled: false"
+          >
+          </a-camera>
+
+          <!--  <a-entity id="rig" position="0 0 0">
+            <a-camera id="camera"></a-camera>
+          </a-entity> -->
+
           <a-marker
             id="celulaAnimalMarker"
             type="pattern"
@@ -108,8 +123,8 @@ const animations: IAnimation[] = animationsData[title];
               id="animatedModel"
               position="0 0.5 -0.1"
               rotation="0 90 0"
-              scale="10 5 10"
-              animation-mixer="clip:*; loop: repeat"
+              scale="10 10 10"
+              animation-mixer="timeScale: 1"
               gltf-model="#celula-animal"
               class="clickable"
               gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
@@ -149,15 +164,22 @@ const animations: IAnimation[] = animationsData[title];
 
   window.addEventListener("DOMContentLoaded", async () => {
     const video = (await waitForElm("video")) as HTMLElement;
-    const scene = document.querySelector("a-scene")!;
+    const scene = document.querySelector("a-scene") as HTMLElement;
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
+    const camera = document.querySelector("a-camera") as any;
+
+    console.log(camera.object3D);
 
     goBackAnchor.href = params["cb_url"] || "#";
 
     video.style.display = "unset !important";
     video.style.width = `${scene.clientWidth}px !important`;
     video.style.height = `${scene.clientHeight}px !important`;
+
+    scene.style.width = `${scene.clientHeight}px`;
+    // scene.style.right = `${scene.clientHeight / 2}px`;
+
     scene.appendChild(video);
   });
 </script>
@@ -203,23 +225,23 @@ const animations: IAnimation[] = animationsData[title];
 
 <style is:inline>
   a-scene {
-    display: block !important;
-    position: relative !important;
-    width: 100% !important;
     height: 100% !important;
+    right: 50% !important;
+    aspect-ratio: 1/ 1 !important;
   }
 
   .a-canvas {
     z-index: 50 !important;
   }
 
-  video {
+  #arjs-video {
     display: inline-block !important;
-    /*width: 100% !important;
-      height: 100% !important;*/
+    width: 100% !important;
+    height: 100% !important;
     position: relative !important;
     z-index: 1 !important;
     margin: 0 !important;
     object-fit: cover !important;
+    aspect-ratio: 1/1 !important;
   }
 </style>

@@ -24,29 +24,6 @@ const {} = Astro.props;
       360°
     </p>
   </div>
-
-  <!-- VERTICAL SLIDE -->
-  <div class="absolute z-0 right-0 grid items-start h-48 bottom-0">
-    <div
-      class="-rotate-90 w-60 translate-x-1/3 flex items-center h-fit justify-center"
-    >
-      <p class="absolute left-6 text-[.75rem] font-medium text-zinc-100/50">
-        0°
-      </p>
-      <input
-        type="range"
-        name="rotation"
-        id="xRotationInput"
-        min="-180"
-        max="180"
-        value="0"
-        step="1"
-      />
-      <p class="absolute right-6 text-[.75rem] font-medium text-zinc-100/50">
-        360°
-      </p>
-    </div>
-  </div>
 </div>
 
 <style>
@@ -109,11 +86,9 @@ const {} = Astro.props;
   const rotationSlider = document.getElementById(
     "rotationSlider"
   ) as HTMLElement;
+
   const yRotationInput = document.getElementById(
     "yRotationInput"
-  ) as HTMLInputElement;
-  const xRotationInput = document.getElementById(
-    "xRotationInput"
   ) as HTMLInputElement;
 
   const entity = celulaAnimalMarker.querySelector("a-entity") as any;
@@ -167,18 +142,6 @@ const {} = Astro.props;
 
     const rads = degToRad(amount);
     entity.object3D.rotation.y = degToRad(90) + rads;
-    celulaAnimalMarker.setAttribute("scale", {
-      x: 1,
-      y: 1,
-      z: 1,
-    } as unknown as string);
-    // entity.object3D.scale.set(7, 7, 14);
-  });
-  xRotationInput.addEventListener("input", (e) => {
-    const amount = parseInt((e.target as HTMLInputElement).value);
-
-    const rads = degToRad(amount);
-    entity.object3D.rotation.z = degToRad(90) + rads;
     celulaAnimalMarker.setAttribute("scale", {
       x: 1,
       y: 1,

@@ -89,6 +89,7 @@ const { title } = Astro.params;
           animations.map((animation) => (
             <div
               data-clip={animation.clip}
+              data-loop={animation.loop}
               class="flex-1 flex min-w-full h-full gap-0 items-center"
             >
               {animation.image ? (
@@ -181,13 +182,17 @@ const { title } = Astro.params;
 </div>
 
 <script>
+  import { fade } from "astro:transitions";
+
   const nextAnimationBtn = document.getElementById("nextAnimationBtn")!;
   const prevAnimationBtn = document.getElementById("prevAnimationBtn")!;
   const animationWrapper = document.getElementById("animationWrapper")!;
   const animations = Array.from(animationWrapper.querySelectorAll("&>div"));
   const model = document.getElementById("animatedModel");
   let canSlide = true;
-  let coolDownTime = 800;
+  let coolDownTime = 500;
+  let animationDuration = 330;
+  let animationState: "in" | "out" = "in";
 
   let index = 0;
   const amountOfAnimations = animationWrapper!.childElementCount;
@@ -199,8 +204,6 @@ const { title } = Astro.params;
 
     canSlide = false;
     let timer: ReturnType<typeof setTimeout>;
-
-      console.log(canSlide)
 
     timer = setTimeout(() => {
       canSlide = true;
@@ -222,7 +225,7 @@ const { title } = Astro.params;
     }
   }
 
-  nextAnimationBtn.addEventListener("click", () => {
+  function nextAnimationHandler() {
     if (!canSlide) return;
     if (index >= amountOfAnimations - 1) return;
 
@@ -231,9 +234,11 @@ const { title } = Astro.params;
     checkDisplays();
     updateWrapperTranslate(index);
     updateAnimationMixer();
-  });
+  }
 
-  prevAnimationBtn.addEventListener("click", () => {
+  nextAnimationBtn.addEventListener("click", nextAnimationHandler);
+
+  function prevAnimationHandler() {
     if (!canSlide) return;
     if (index <= 0) return;
 
@@ -242,14 +247,36 @@ const { title } = Astro.params;
     checkDisplays();
     updateWrapperTranslate(index);
     updateAnimationMixer();
-  });
+  }
+
+  prevAnimationBtn.addEventListener("click", prevAnimationHandler);
+
+  function resumeAnimation() {
+    (model as any).play();
+
+    prevAnimationBtn.removeEventListener("click", resumeAnimation);
+    nextAnimationBtn.removeEventListener("click", resumeAnimation);
+  }
 
   function updateAnimationMixer() {
+    const currentAnimation = model!.getAttribute("animation-mixer") as any;
     const clip = animations[index].getAttribute("data-clip") || "NoClip";
+    const loop = animations[index].getAttribute("data-loop") || "repeat";
 
-    if (model) {
-      model.setAttribute("animation-mixer", `clip: ${clip}; loop: repeat`);
+    if (loop == "pingpong") {
+      let timer: ReturnType<typeof setTimeout>;
+
+      timer = setTimeout(() => {
+        (model as any).pause();
+
+        prevAnimationBtn.addEventListener("click", resumeAnimation);
+        nextAnimationBtn.addEventListener("click", resumeAnimation);
+
+        clearTimeout(timer);
+      }, animationDuration);
     }
+
+    model!.setAttribute("animation-mixer", `clip: ${clip}; loop: ${loop}`);
   }
 
   window.addEventListener("DOMContentLoaded", () => {

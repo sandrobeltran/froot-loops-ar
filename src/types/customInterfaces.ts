@@ -1,6 +1,6 @@
 export interface IAnimation {
     clip: string;
-    loop?: boolean;
+    loop?: "repeat" | "once" | "pingpong";
     label: string;
     description: string;
     image?: string
