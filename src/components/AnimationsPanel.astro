@@ -259,24 +259,45 @@ const { title } = Astro.params;
   }
 
   function updateAnimationMixer() {
-    const currentAnimation = model!.getAttribute("animation-mixer") as any;
+    const currentAnimation = model!.getAttribute(
+      "animation-mixer"
+    ) as unknown as {
+      clip: string;
+      loop: "repeat" | "once" | "pingpong";
+    };
+
+    model!.setAttribute(
+      "animation-mixer",
+      `clip: ${currentAnimation.clip}.out; loop: once; clampWhenFinished: true`
+    );
+    console.log(`Exiting ${currentAnimation.clip}...`);
+
     const clip = animations[index].getAttribute("data-clip") || "NoClip";
     const loop = animations[index].getAttribute("data-loop") || "repeat";
 
-    if (loop == "pingpong") {
-      let timer: ReturnType<typeof setTimeout>;
+    let timer = setTimeout(() => {
+      playAnimationClip(clip, loop);
+      clearTimeout(timer);
+    }, animationDuration);
+  }
 
-      timer = setTimeout(() => {
-        (model as any).pause();
+  function playAnimationClip(clip: string, loop: string) {
+    console.log(`Entering ${clip}...`);
 
-        prevAnimationBtn.addEventListener("click", resumeAnimation);
-        nextAnimationBtn.addEventListener("click", resumeAnimation);
+    model!.setAttribute(
+      "animation-mixer",
+      `clip: ${clip}.in; loop: once; clampWhenFinished: true`
+    );
 
-        clearTimeout(timer);
-      }, animationDuration);
-    }
+    let timer = setTimeout(() => {
+      console.log(`Staying on ${clip}...`);
+      model!.setAttribute(
+        "animation-mixer",
+        `clip: ${clip}.idle; loop: repeat; clampWhenFinished: true`
+      );
 
-    model!.setAttribute("animation-mixer", `clip: ${clip}; loop: ${loop}`);
+      clearTimeout(timer);
+    }, animationDuration);
   }
 
   window.addEventListener("DOMContentLoaded", () => {

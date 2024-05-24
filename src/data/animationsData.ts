@@ -273,15 +273,15 @@ export const animationsData: { [key: string]: IAnimation[] } = {
     ],
     "prueba": [
         {
-            clip: "Centriolo.idle",
+            clip: "Rest.idle",
             description: 'Son como los "creadores de la vida". Las células reproductivas, como los óvulos y espermatozoides, se combinan para formar nuevas células y dar origen a nuevos seres vivos.',
             label: "Célula Reproductiva",
         },
         {
-            clip: "Centriolo.scale",
+            clip: "Centriolo",
             description: 'Animación de escalado del centriolo',
             label: "Centriolo",
-            loop: "pingpong"
+            loop: "repeat"
         },
     ]
 }
