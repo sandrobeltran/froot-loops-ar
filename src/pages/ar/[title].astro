@@ -118,13 +118,14 @@ const animations: IAnimation[] = animationsData[title];
             smoothThreshold="5"
             raycaster="objects: .clickable"
             cursor="fuse: false; rayOrigin: mouse;"
+            visible
           >
             <a-entity
               id="animatedModel"
               position="0 0.5 -0.1"
-              rotation="0 90 0"
+              rotation="0 -90 0"
               scale="10 10 10"
-              animation-mixer="timeScale: 1"
+              animation-mixer="clip: Celula.rest; timeScale: 1"
               gltf-model="#celula-animal"
               class="clickable"
               gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
@@ -136,6 +137,8 @@ const animations: IAnimation[] = animationsData[title];
     </section>
   </main>
 </Layout>
+
+<!-- rotation = 0 90 0 -->
 
 <script>
   function waitForElm(selector: string) {

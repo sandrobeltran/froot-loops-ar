@@ -191,7 +191,7 @@ const { title } = Astro.params;
   const model = document.getElementById("animatedModel");
   let canSlide = true;
   let coolDownTime = 500;
-  let animationDuration = 330;
+  let animationDuration = 330; // 330
   let animationState: "in" | "out" = "in";
 
   let index = 0;
@@ -268,9 +268,9 @@ const { title } = Astro.params;
 
     model!.setAttribute(
       "animation-mixer",
-      `clip: ${currentAnimation.clip}.out; loop: once; clampWhenFinished: true`
+      `clip: ${currentAnimation.clip.split(".")[0]}.out; loop: once; clampWhenFinished: true`
     );
-    console.log(`Exiting ${currentAnimation.clip}...`);
+    console.log(`Exiting ${currentAnimation.clip.split(".")[0]}...`);
 
     const clip = animations[index].getAttribute("data-clip") || "NoClip";
     const loop = animations[index].getAttribute("data-loop") || "repeat";
@@ -293,7 +293,7 @@ const { title } = Astro.params;
       console.log(`Staying on ${clip}...`);
       model!.setAttribute(
         "animation-mixer",
-        `clip: ${clip}.idle; loop: repeat; clampWhenFinished: true`
+        `clip: ${clip}.idle; loop: repeat`
       );
 
       clearTimeout(timer);
