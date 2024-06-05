@@ -3,155 +3,153 @@ import type { IAnimation } from "../types/customInterfaces";
 export const animationsData: { [key: string]: IAnimation[] } = {
     "celula-animal": [
         {
-            clip: "*",
+            clip: "Celula",
             description: 'La célula animal es una pequeña parte que forma a los animales, como las personas y los gatos. Tiene un centro llamado núcleo y muchas otras partes pequeñas que la ayudan a funcionar. No tiene una pared dura como las plantas.',
             label: "Célula Animal"
-
         },
         {
-            clip: "MembranaCelular.idle",
-            description: "La célula animal tiene una membrana celular que rodea y protege la célula.",
-            label: "Membrana Celular",
-            loop: "repeat",
-            image: "membrana-celular.png"
-        },
-        {
-            clip: "Nucleo.idle",
+            clip: "Nucleo",
             description: "Contiene un núcleo definido que alberga el material genético (ADN).",
             label: "Núcleo",
             loop: "repeat",
             image: "nucleo.png"
         }, {
-            clip: "Citoplasma.idle",
-            description: "En el citoplasma, se encuentran diversos organelos, como las mitocondrias para la producción de energía y el retículo endoplásmico para la síntesis de proteínas.",
-            label: "Citoplasma",
-            loop: "repeat",
-            image: "citoplasma.png"
-        }, {
-            clip: "Lisosomas.idle",
+            clip: "Lisosoma",
             description: "Puede contener lisosomas, organelos encargados de la digestión celular y la eliminación de desechos.",
             label: "Lisosomas",
             loop: "repeat",
             image: "lisosomas.png"
         },
         {
-            clip: "Centriolo.idle",
-            description: "Presenta centríolos, que son importantes en la división celular.",
-            label: "Centriolo",
-            loop: "repeat",
-            image: "centriolo.png"
-        },
-        {
-            clip: "Mitocondria.idle",
+            clip: "Mitocondria",
             description: 'Las mitocondrias son los "generadores de energía" de la célula animal. Producen ATP, la fuente principal de energía celular, mediante un proceso llamado respiración celular.',
             label: "Mitocondria",
             loop: "repeat",
             image: "mitocondria.png"
         },
         {
-            clip: "Cromosomas.idle",
-            description: "Los cromosomas contienen el material genético (ADN) de la célula animal. Se encuentran dentro del núcleo y llevan la información genética necesaria para el funcionamiento celular y la herencia.",
-            label: "Cromosomas",
-            loop: "repeat",
-            image: "cromosomas.png"
-        },
-        {
-            clip: "MembranaNuclear.idle",
-            description: 'La membrana nuclear rodea el núcleo y actúa como una "barrera de seguridad". Regula el paso de sustancias dentro y fuera del núcleo, protegiendo así el material genético.',
-            label: "Membrana Nuclear",
-            loop: "repeat",
-            image: "membrana-nuclear.png"
-        },
-        {
-            clip: "Ribosomas.idle",
+            clip: "Ribosomas",
             description: 'Los ribosomas son los "constructores de proteínas" de la célula animal. Participan en la síntesis de proteínas utilizando las instrucciones codificadas en el ARN mensajero.',
             label: "Ribosomas",
             loop: "repeat",
             image: "ribosomas.png"
         },
         {
-            clip: "ReticuloEndoplasmatico.idle",
+            clip: "ReticuloEndo",
             description: "El retículo endoplasmático es una red de membranas que transporta proteínas y lípidos dentro de la célula. Existen dos tipos: el retículo endoplasmático rugoso (con ribosomas) y el liso (sin ribosomas).",
             label: "Retículo Endoplasmático",
             loop: "repeat",
             image: "reticulo-endoplasmatico.png"
         },
         {
-            clip: "AparatoDeGolgi.idle",
+            clip: "Golgi",
             description: 'El complejo de Golgi es como el "centro de envío" de la célula. Modifica, empaca y distribuye proteínas y lípidos producidos en la célula, preparándolos para su exportación o uso interno.',
             label: "Aparato de Golgi",
+            loop: "repeat",
+            image: "aparato-de-golgi.png"
+        },
+        {
+            clip: "Vacuola",
+            description: 'Descripción de la vacuola',
+            label: "Vacuola",
+            loop: "repeat",
+            image: "aparato-de-golgi.png"
+        },
+        {
+            clip: "Centriolo",
+            description: 'Descripción del Centriolo',
+            label: "Centriolo",
             loop: "repeat",
             image: "aparato-de-golgi.png"
         },
     ],
     "celula-procariota": [
         {
-            clip: "*",
+            clip: "Celula",
             description: 'Las células procariotas son células más simples y primitivas, sin un núcleo definido y con muy pocos organelos. El término "procariota" significa "antes del núcleo". Bacterias y arqueas son ejemplos de células procariotas.',
             label: "Célula Procariota"
-
         },
         {
-            clip: "Nucleoide.idle",
-            description: "El nucleoide es la parte de la célula procariota donde se encuentra el ADN. A diferencia de las células eucariotas, no está separado por una membrana.",
+            clip: "Nucleoide",
+            description: "Descripción de nucleoide",
             label: "Nucleoide",
             loop: "repeat",
-            image: "nucleoide.png"
-        },
-        {
-            clip: "Flagelo.idle",
-            description: 'El flagelo es una especie de "cola" que tienen algunas células procariotas. Sirve para moverse como si fuera un pequeño motor que las empuja por el agua u otros líquidos.',
-            label: "Flagelo",
-            loop: "repeat",
-            image: "flagelo.png"
-        },
-        {
-            clip: "ParedCelular.idle",
-            description: 'La pared celular es una capa extra dura que rodea la célula procariota. Le da forma y la protege. Las células de las plantas también tienen una pared celular, pero es un poco diferente.',
-            label: "Pared Celular",
-            loop: "repeat",
-            image: "pared-celular.png"
+            image: "nucleo.png"
         }, {
-            clip: "MembranaPlasmática.idle",
-            description: 'La membrana plasmática es la capa que rodea a todas las células, tanto eucariotas como procariotas. Funciona como una puerta que deja entrar y salir cosas necesarias para la célula.',
-            label: "Membrana Plasmática",
+            clip: "Plasmidos",
+            description: "Descripción de plasmidos",
+            label: "Plasmidos",
             loop: "repeat",
-            image: "membrana-plasmatica.png"
+            image: "lisosomas.png"
+        },
+        {
+            clip: "Ribosomas",
+            description: 'Los ribosomas son los "constructores de proteínas" de la célula animal. Participan en la síntesis de proteínas utilizando las instrucciones codificadas en el ARN mensajero.',
+            label: "Ribosomas",
+            loop: "repeat",
+            image: "ribosomas.png"
         },
     ],
     "celula-eucariota": [
         {
-            clip: "*",
+            clip: "Celula",
             description: 'Las células eucariotas son células más avanzadas y complejas. Tienen un núcleo bien definido y muchos "orgánulos" o estructuras internas que cumplen diferentes funciones. Se encuentran en plantas, animales, hongos y protistas.',
             label: "Célula Eucariota"
-
         },
         {
-            clip: "Nucleolo.idle",
-            description: "El nucleolo es una parte pequeña dentro del núcleo de la célula eucariota. Aquí es donde se hacen los ribosomas, que son como pequeñas fábricas para crear proteínas.",
-            label: "Nucléolo",
+            clip: "Nucleo",
+            description: "Contiene un núcleo definido que alberga el material genético (ADN).",
+            label: "Núcleo",
             loop: "repeat",
-            image: "nucleolo.png"
+            image: "nucleo.png"
+        }, {
+            clip: "Lisosoma",
+            description: "Puede contener lisosomas, organelos encargados de la digestión celular y la eliminación de desechos.",
+            label: "Lisosomas",
+            loop: "repeat",
+            image: "lisosomas.png"
         },
         {
-            clip: "Mitocondria.idle",
-            description: 'Las mitocondrias son conocidas como las "centrales energéticas" de la célula. Producen energía a partir de los alimentos que comemos para que la célula pueda hacer su trabajo.',
+            clip: "Mitocondria",
+            description: 'Las mitocondrias son los "generadores de energía" de la célula animal. Producen ATP, la fuente principal de energía celular, mediante un proceso llamado respiración celular.',
             label: "Mitocondria",
             loop: "repeat",
             image: "mitocondria.png"
         },
         {
-            clip: "Nucleo.idle",
-            description: 'El núcleo es el "centro de control" de la célula eucariota. Contiene el ADN, que es como un libro de instrucciones para el crecimiento y funcionamiento de la célula.',
-            label: "Núcleo",
-            loop: "repeat",
-            image: "nucleo.png"
-        }, {
-            clip: "Ribosomas.idle",
-            description: 'Los ribosomas son pequeñas fábricas en la célula que crean proteínas. Las proteínas son esenciales para el crecimiento y la reparación de la célula. Los dos tipos principales de células eucariotas son las células animales y las células vegetales.',
+            clip: "Ribosomas",
+            description: 'Los ribosomas son los "constructores de proteínas" de la célula animal. Participan en la síntesis de proteínas utilizando las instrucciones codificadas en el ARN mensajero.',
             label: "Ribosomas",
             loop: "repeat",
             image: "ribosomas.png"
+        },
+        {
+            clip: "ReticuloEndo",
+            description: "El retículo endoplasmático es una red de membranas que transporta proteínas y lípidos dentro de la célula. Existen dos tipos: el retículo endoplasmático rugoso (con ribosomas) y el liso (sin ribosomas).",
+            label: "Retículo Endoplasmático",
+            loop: "repeat",
+            image: "reticulo-endoplasmatico.png"
+        },
+        {
+            clip: "Golgi",
+            description: 'El complejo de Golgi es como el "centro de envío" de la célula. Modifica, empaca y distribuye proteínas y lípidos producidos en la célula, preparándolos para su exportación o uso interno.',
+            label: "Aparato de Golgi",
+            loop: "repeat",
+            image: "aparato-de-golgi.png"
+        },
+        {
+            clip: "Vacuola",
+            description: 'Descripción de la vacuola',
+            label: "Vacuola",
+            loop: "repeat",
+            image: "aparato-de-golgi.png"
+        },
+        {
+            clip: "Centriolo",
+            description: 'Descripción del Centriolo',
+            label: "Centriolo",
+            loop: "repeat",
+            image: "aparato-de-golgi.png"
         },
     ],
     "celula-vegetal": [
@@ -254,7 +252,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
         },
     ], "piel": [
         {
-            clip: "*",
+            clip: "Celula",
             description: 'Son como el "escudo protector". Las células de la piel forman una capa que protege nuestro cuerpo contra gérmenes y ayuda a regular la temperatura.',
             label: "Piel",
         },

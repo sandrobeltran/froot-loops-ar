@@ -270,7 +270,7 @@ const { title } = Astro.params;
       "animation-mixer",
       `clip: ${currentAnimation.clip.split(".")[0]}.out; loop: once; clampWhenFinished: true`
     );
-    console.log(`Exiting ${currentAnimation.clip.split(".")[0]}...`);
+    console.log(`Exiting ${currentAnimation.clip}`);
 
     const clip = animations[index].getAttribute("data-clip") || "NoClip";
     const loop = animations[index].getAttribute("data-loop") || "repeat";
@@ -284,17 +284,27 @@ const { title } = Astro.params;
   function playAnimationClip(clip: string, loop: string) {
     console.log(`Entering ${clip}...`);
 
-    model!.setAttribute(
-      "animation-mixer",
-      `clip: ${clip}.in; loop: once; clampWhenFinished: true`
-    );
+    if (index !== 0) {
+      model!.setAttribute(
+        "animation-mixer",
+        `clip: ${clip}.in; loop: once; clampWhenFinished: true`
+      );
+    }
 
     let timer = setTimeout(() => {
       console.log(`Staying on ${clip}...`);
-      model!.setAttribute(
-        "animation-mixer",
-        `clip: ${clip}.idle; loop: repeat`
-      );
+
+      if (index === 0) {
+        model!.setAttribute(
+          "animation-mixer",
+          `clip: ${clip}.rest; loop: repeat`
+        );
+      } else {
+        model!.setAttribute(
+          "animation-mixer",
+          `clip: ${clip}.idle; loop: repeat`
+        );
+      }
 
       clearTimeout(timer);
     }, animationDuration);
