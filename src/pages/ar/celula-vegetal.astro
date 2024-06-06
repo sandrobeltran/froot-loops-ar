@@ -5,47 +5,10 @@ import type { IAnimation } from "../../types/customInterfaces";
 import { animationsData } from "../../data/animationsData";
 import RotationSlider from "../../components/RotationSlider.astro";
 
-const { title } = Astro.params;
-
-export async function getStaticPaths() {
-  return [
-    {
-      params: { title: "celula-animal" },
-    },
-    {
-      params: { title: "celula-eucariota" },
-    },
-    {
-      params: { title: "celula-procariota" },
-    },
-    {
-      params: { title: "celula-sanguinea" },
-    },
-    {
-      params: { title: "celula-muscular" },
-    },
-    {
-      params: { title: "neurona" },
-    },
-    {
-      params: { title: "piel" },
-    },
-    {
-      params: { title: "celula-osea" },
-    },
-    {
-      params: { title: "tejido-vegetal" },
-    },
-    {
-      params: { title: "prueba" },
-    },
-  ];
-}
-
-const animations: IAnimation[] = animationsData[title];
+const animations: IAnimation[] = animationsData["celula-vegetal"];
 ---
 
-<Layout title={title!}>
+<Layout title={"Celula Vegetal"}>
   <main class="h-full bg-primary">
     <section class="h-full relative px-4 pb-4 flex flex-col">
       <img
@@ -88,8 +51,9 @@ const animations: IAnimation[] = animationsData[title];
           gesture-detector
         >
           <a-assets>
-            <a-asset-item id="celula-animal" src=`/assets/${title}/model.glb`
-            ></a-asset-item>
+            <a-asset-item
+              id="celula-animal"
+              src=`/assets/celula-vegetal/model.glb`></a-asset-item>
           </a-assets>
           <a-camera
             scale="1 1 1"
@@ -120,7 +84,7 @@ const animations: IAnimation[] = animationsData[title];
             <a-entity
               id="animatedModel"
               position="0 0.5 -0.1"
-              rotation="0 90 0"
+              rotation="0 -90 0"
               scale="10 10 10"
               animation-mixer="clip: Celula.rest; timeScale: 1"
               gltf-model="#celula-animal"
@@ -130,7 +94,7 @@ const animations: IAnimation[] = animationsData[title];
           </a-marker>
         </a-scene>
       </div>
-      <AnimationsPanel animations={animations} />
+      <AnimationsPanel title="celula-vegetal" animations={animations} />
     </section>
   </main>
 </Layout>

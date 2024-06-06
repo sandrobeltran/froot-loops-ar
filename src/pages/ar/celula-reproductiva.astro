@@ -1,51 +1,10 @@
 ---
 import AnimationsPanel from "../../components/AnimationsPanel.astro";
 import Layout from "../../layouts/Layout.astro";
-import type { IAnimation } from "../../types/customInterfaces";
-import { animationsData } from "../../data/animationsData";
-import RotationSlider from "../../components/RotationSlider.astro";
-
-const { title } = Astro.params;
-
-export async function getStaticPaths() {
-  return [
-    {
-      params: { title: "celula-animal" },
-    },
-    {
-      params: { title: "celula-eucariota" },
-    },
-    {
-      params: { title: "celula-procariota" },
-    },
-    {
-      params: { title: "celula-sanguinea" },
-    },
-    {
-      params: { title: "celula-muscular" },
-    },
-    {
-      params: { title: "neurona" },
-    },
-    {
-      params: { title: "piel" },
-    },
-    {
-      params: { title: "celula-osea" },
-    },
-    {
-      params: { title: "tejido-vegetal" },
-    },
-    {
-      params: { title: "prueba" },
-    },
-  ];
-}
-
-const animations: IAnimation[] = animationsData[title];
+import { celulaReproductivaAnimations } from "../../data/animationsData";
 ---
 
-<Layout title={title!}>
+<Layout title={"Células Reproductivas"}>
   <main class="h-full bg-primary">
     <section class="h-full relative px-4 pb-4 flex flex-col">
       <img
@@ -82,13 +41,16 @@ const animations: IAnimation[] = animationsData[title];
           vr-mode-ui="enabled: false;"
           loading-screen="enabled: false;"
           renderer="logarithmicDepthBuffer: true;"
-          arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; patternRatio: 0.8"
+          arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
           id="scene"
           embedded
           gesture-detector
         >
           <a-assets>
-            <a-asset-item id="celula-animal" src=`/assets/${title}/model.glb`
+            <a-asset-item
+              id="espermatozoide-model"
+              src=`/assets/espermatozoide/model.glb`></a-asset-item>
+            <a-asset-item id="ovulo-model" src=`/assets/ovulo/model.glb`
             ></a-asset-item>
           </a-assets>
           <a-camera
@@ -117,20 +79,70 @@ const animations: IAnimation[] = animationsData[title];
             cursor="fuse: false; rayOrigin: mouse;"
             visible
           >
-            <a-entity
-              id="animatedModel"
-              position="0 0.5 -0.1"
-              rotation="0 90 0"
-              scale="10 10 10"
-              animation-mixer="clip: Celula.rest; timeScale: 1"
-              gltf-model="#celula-animal"
-              class="clickable"
-              gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
-            ></a-entity>
+            <a-entity id="animatedModel" rotation="0 90 0">
+              <!-- ESPERMATOZOIDE -->
+              <a-entity
+                id="espermatozoideAnimated"
+                position="-0.6 1.5 -0.1"
+                rotation="0 0 0"
+                scale="10 10 10"
+                animation-mixer="clip: Espermatozoide.idle; timeScale: 1"
+                gltf-model="#espermatozoide-model"
+                class="clickable"
+                gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
+              ></a-entity>
+
+              <!-- OVULO -->
+              <a-entity
+                id="ovuloAnimated"
+                position="0.6 0.5 -0.1"
+                rotation="0 0 0"
+                scale="10 10 10"
+                animation-mixer="clip: Membrana.idle; timeScale: 1"
+                gltf-model="#ovulo-model"
+                class="clickable"
+                gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
+              ></a-entity>
+            </a-entity>
           </a-marker>
         </a-scene>
       </div>
-      <AnimationsPanel animations={animations} />
+      <AnimationsPanel
+        inactive={true}
+        animations={celulaReproductivaAnimations}
+      />
+
+      <!-- somsoms -->
+
+      <!--  <div
+        id="slidersWrapper"
+        class="w-full gap-0 p-4 absolute z-[9999] bottom-0 left-0"
+      >
+        <RotationSlider />
+        <div
+          id="animationsPanel"
+          class="w-full flex gap-0 p-4 items-center px-6 bg-gradient-to-b from-tertiary to-secondary z-50 left-0 justify-center"
+        >
+          <div class="w-full overflow-x-hidden">
+            <div
+              id="animationWrapper"
+              style={{ minWidth: `${celulaReproductivaAnimations.length}%` }}
+              class="flex transition-transform items-center"
+            >
+              <div class="flex-1 h-full flex gap-1 flex-col overflow-y-auto">
+                <h4 class="text-light leading-tight text-xl font-bold">
+                  Célula Reproductiva
+                </h4>
+                <p class="text-light/80 max-h-28 text-sm max-w-[90%]">
+                  Son como los "creadores de la vida". Las células
+                  reproductivas, como los óvulos y espermatozoides, se combinan
+                  para formar nuevas células y dar origen a nuevos seres vivos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
     </section>
   </main>
 </Layout>
@@ -182,45 +194,6 @@ const animations: IAnimation[] = animationsData[title];
 
     scene.appendChild(video);
   });
-</script>
-
-<script is:inline>
-  const sceneEl = document.getElementById("scene");
-  let isMarkerVisible = false;
-
-  sceneEl.addEventListener("markerFound", (e) => {
-    isMarkerVisible = true;
-  });
-
-  sceneEl.addEventListener("markerLost", (e) => {
-    isMarkerVisible = false;
-  });
-  sceneEl.addEventListener("onefingermove", handleRotation);
-  sceneEl.addEventListener("twofingermove", handleScale);
-
-  function handleRotation(event) {
-    console.log(event);
-    if (isMarkerVisible) {
-      el.object3D.rotation.y += event.detail.positionChange.x * rotationFactor;
-
-      el.object3D.rotation.x += event.detail.positionChange.y * rotationFactor;
-    }
-  }
-  function handleScale(event) {
-    if (isMarkerVisible) {
-      this.scaleFactor *=
-        1 + event.detail.spreadChange / event.detail.startSpread;
-
-      this.scaleFactor = Math.min(
-        Math.max(this.scaleFactor, this.data.minScale),
-        this.data.maxScale
-      );
-
-      el.object3D.scale.x = scaleFactor * initialScale.x;
-      el.object3D.scale.y = scaleFactor * initialScale.y;
-      el.object3D.scale.z = scaleFactor * initialScale.z;
-    }
-  }
 </script>
 
 <style is:inline>

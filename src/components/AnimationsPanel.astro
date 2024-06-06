@@ -4,16 +4,15 @@ import RotationSlider from "./RotationSlider.astro";
 
 interface Props {
   animations: IAnimation[];
+  inactive?: boolean;
+  title?: string;
 }
 
 const { animations } = Astro.props;
-const { title } = Astro.params;
+const title = Astro.params.title || Astro.props.title;
 ---
 
-<div
-  id="slidersWrapper"
-  class="w-full gap-0 p-4 absolute z-[9999] bottom-0 left-0"
->
+<div id="slidersWrapper" class="w-screen gap-0 fixed z-[9999] bottom-0 left-0">
   <RotationSlider />
   <div
     id="animationsPanel"
@@ -121,6 +120,7 @@ const { title } = Astro.params;
         }
       </div>
     </div>
+
     <button
       id="nextAnimationBtn"
       class="z-20 absolute right-1 font-bold text-xl text-light"
@@ -266,11 +266,11 @@ const { title } = Astro.params;
       loop: "repeat" | "once" | "pingpong";
     };
 
+    console.log(`Exiting ${currentAnimation.clip}`);
     model!.setAttribute(
       "animation-mixer",
       `clip: ${currentAnimation.clip.split(".")[0]}.out; loop: once; clampWhenFinished: true`
     );
-    console.log(`Exiting ${currentAnimation.clip}`);
 
     const clip = animations[index].getAttribute("data-clip") || "NoClip";
     const loop = animations[index].getAttribute("data-loop") || "repeat";
@@ -282,9 +282,8 @@ const { title } = Astro.params;
   }
 
   function playAnimationClip(clip: string, loop: string) {
-    console.log(`Entering ${clip}...`);
-
     if (index !== 0) {
+      console.log(`Entering ${clip}...`);
       model!.setAttribute(
         "animation-mixer",
         `clip: ${clip}.in; loop: once; clampWhenFinished: true`
@@ -318,13 +317,17 @@ const { title } = Astro.params;
 </script>
 
 <script>
-  const slidersWrapper = document.getElementById("slidersWrapper");
+  const slidersWrapper = document.getElementById(
+    "slidersWrapper"
+  ) as HTMLElement;
 
   window.addEventListener("DOMContentLoaded", () => {
     const isBrave = (navigator as any).brave;
 
     if (isBrave && slidersWrapper) {
-      slidersWrapper.style.bottom = "10.4%";
+      slidersWrapper.style.bottom = "0%";
+    } else {
+      slidersWrapper.style.bottom = "0%";
     }
   });
 </script>
