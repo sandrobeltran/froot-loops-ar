@@ -5,44 +5,10 @@ import type { IAnimation } from "../../types/customInterfaces";
 import { animationsData } from "../../data/animationsData";
 import RotationSlider from "../../components/RotationSlider.astro";
 
-const { title } = Astro.params;
-
-export async function getStaticPaths() {
-  return [
-    {
-      params: { title: "celula-animal" },
-    },
-    {
-      params: { title: "celula-procariota" },
-    },
-    {
-      params: { title: "celula-sanguinea" },
-    },
-    {
-      params: { title: "celula-muscular" },
-    },
-    {
-      params: { title: "neurona" },
-    },
-    {
-      params: { title: "piel" },
-    },
-    {
-      params: { title: "celula-osea" },
-    },
-    {
-      params: { title: "tejido-vegetal" },
-    },
-    {
-      params: { title: "prueba" },
-    },
-  ];
-}
-
-const animations: IAnimation[] = animationsData[title];
+const animations: IAnimation[] = animationsData["celula-eucariota"];
 ---
 
-<Layout title={title!}>
+<Layout title={"Celula Eucariota"}>
   <main class="h-full bg-primary">
     <section class="h-full relative px-4 pb-4 flex flex-col">
       <img
@@ -86,8 +52,9 @@ const animations: IAnimation[] = animationsData[title];
           gesture-detector
         >
           <a-assets>
-            <a-asset-item id="celula-animal" src=`/assets/${title}/model.glb`
-            ></a-asset-item>
+            <a-asset-item
+              id="celula-animal"
+              src=`/assets/celula-eucariota/model.glb`></a-asset-item>
           </a-assets>
           <a-camera
             scale="1 1 1"
@@ -113,6 +80,7 @@ const animations: IAnimation[] = animationsData[title];
             smoothThreshold="5"
             raycaster="objects: .clickable"
             cursor="fuse: false; rayOrigin: mouse;"
+            visible
           >
             <a-entity
               id="animatedModel"
@@ -132,7 +100,7 @@ const animations: IAnimation[] = animationsData[title];
           ></a-entity>
         </a-scene>
       </div>
-      <AnimationsPanel animations={animations} />
+      <AnimationsPanel title="celula-eucariota" animations={animations} />
     </section>
   </main>
 </Layout>

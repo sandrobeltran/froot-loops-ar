@@ -81,6 +81,7 @@ const title = Astro.params.title || Astro.props.title;
       <!-- WRAPPER -->
       <div
         id="animationWrapper"
+        data-title={title}
         style={{ minWidth: `${animations.length}%` }}
         class="flex transition-transform items-center"
       >
@@ -258,6 +259,8 @@ const title = Astro.params.title || Astro.props.title;
     nextAnimationBtn.removeEventListener("click", resumeAnimation);
   }
 
+  const title = animationWrapper.getAttribute("data-title");
+
   function updateAnimationMixer() {
     const currentAnimation = model!.getAttribute(
       "animation-mixer"
@@ -265,6 +268,15 @@ const title = Astro.params.title || Astro.props.title;
       clip: string;
       loop: "repeat" | "once" | "pingpong";
     };
+
+    //? harcoding celula eucariota
+    // if (index === 0 && title === "celula-eucariota") {
+      // model?.setAttribute("rotation", "0 90 45");
+    // } else if (index !== 0 && title === "celula-eucariota") {
+      // model?.setAttribute("rotation", "0 -90 0");
+    // } else {
+      // model?.setAttribute("rotation", "0 90 45");
+    // }
 
     console.log(`Exiting ${currentAnimation.clip}`);
     model!.setAttribute(

@@ -42,6 +42,7 @@ const animations: IAnimation[] = animationsData["celula-vegetal"];
         class="overflow-hidden relative block w-full h-[calc(100%-16px)] bg-light"
       >
         <a-scene
+          light="defaultLightsEnabled: false"
           vr-mode-ui="enabled: false;"
           loading-screen="enabled: false;"
           renderer="logarithmicDepthBuffer: true;"
@@ -92,6 +93,11 @@ const animations: IAnimation[] = animationsData["celula-vegetal"];
               gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
             ></a-entity>
           </a-marker>
+
+          <a-entity light="type: ambient; color: #fff"></a-entity>
+
+          <a-entity light="color: #fff; intensity: 1.25" position="0 2 1"
+          ></a-entity>
         </a-scene>
       </div>
       <AnimationsPanel title="celula-vegetal" animations={animations} />
@@ -99,120 +105,4 @@ const animations: IAnimation[] = animationsData["celula-vegetal"];
   </main>
 </Layout>
 
-<!-- rotation = 0 90 0 -->
-
-<script type="text/javascript" is:inline>
-  function waitForElm(selector) {
-    console.log(`Waiting for ${selector}`);
-    return new Promise((resolve) => {
-      if (document.querySelector(selector)) {
-        return resolve(document.querySelector(selector));
-      }
-
-      const observer = new MutationObserver((mutations) => {
-        if (document.querySelector(selector)) {
-          observer.disconnect();
-          resolve(document.querySelector(selector));
-        }
-      });
-
-      // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-    });
-  }
-
-  const goBackAnchor = document.getElementById("goBackAnchor");
-
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(urlSearchParams.entries());
-
-  goBackAnchor.href = params["cb_url"] || "#";
-
-  window.addEventListener("DOMContentLoaded", async () => {
-    const video = await waitForElm("#arjs-video");
-    const scene = document.querySelector("a-scene");
-    const canvas = await waitForElm(".a-canvas");
-
-    video.style.display = "unset !important";
-    video.style.width = `${scene.clientWidth}px !important`;
-    video.style.height = `${scene.clientHeight}px !important`;
-
-    // scene.style.width = `${scene.clientHeight}px`;
-    canvas.style.width = `${scene.clientHeight}px`;
-    // scene.style.right = `${scene.clientHeight / 2}px`;
-
-    scene.appendChild(video);
-  });
-</script>
-
-<script is:inline>
-  const sceneEl = document.getElementById("scene");
-  let isMarkerVisible = false;
-
-  sceneEl.addEventListener("markerFound", (e) => {
-    isMarkerVisible = true;
-  });
-
-  sceneEl.addEventListener("markerLost", (e) => {
-    isMarkerVisible = false;
-  });
-  sceneEl.addEventListener("onefingermove", handleRotation);
-  sceneEl.addEventListener("twofingermove", handleScale);
-
-  function handleRotation(event) {
-    console.log(event);
-    if (isMarkerVisible) {
-      el.object3D.rotation.y += event.detail.positionChange.x * rotationFactor;
-
-      el.object3D.rotation.x += event.detail.positionChange.y * rotationFactor;
-    }
-  }
-  function handleScale(event) {
-    if (isMarkerVisible) {
-      this.scaleFactor *=
-        1 + event.detail.spreadChange / event.detail.startSpread;
-
-      this.scaleFactor = Math.min(
-        Math.max(this.scaleFactor, this.data.minScale),
-        this.data.maxScale
-      );
-
-      el.object3D.scale.x = scaleFactor * initialScale.x;
-      el.object3D.scale.y = scaleFactor * initialScale.y;
-      el.object3D.scale.z = scaleFactor * initialScale.z;
-    }
-  }
-</script>
-
-<style is:inline>
-  a-scene {
-    width: 100vw !important;
-    height: 100vh !important;
-    /* right: 50% !important; */
-    /* aspect-ratio: 1/ 1 !important; */
-  }
-
-  .a-canvas {
-    height: 100% !important;
-    left: unset !important;
-    right: -50% !important;
-    /* margin: auto; */
-    /* transform: translateX(-50%) !important; */
-    aspect-ratio: 1 / 1 !important;
-    z-index: 50 !important;
-  }
-
-  #arjs-video {
-    display: inline-block !important;
-    width: 100% !important;
-    height: 100% !important;
-    position: relative !important;
-    z-index: 1 !important;
-    margin: 0 !important;
-    object-fit: cover !important;
-    aspect-ratio: 1/1 !important;
-  }
-</style>
+<script src="../../scripts/title.js"></script>
