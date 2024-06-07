@@ -3,7 +3,6 @@ import AnimationsPanel from "../../components/AnimationsPanel.astro";
 import Layout from "../../layouts/Layout.astro";
 import type { IAnimation } from "../../types/customInterfaces";
 import { animationsData } from "../../data/animationsData";
-import RotationSlider from "../../components/RotationSlider.astro";
 
 const { title } = Astro.params;
 
@@ -96,10 +95,6 @@ const animations: IAnimation[] = animationsData[title];
           >
           </a-camera>
 
-          <!--  <a-entity id="rig" position="0 0 0">
-            <a-camera id="camera"></a-camera>
-          </a-entity> -->
-
           <a-marker
             id="celulaAnimalMarker"
             type="pattern"
@@ -125,6 +120,31 @@ const animations: IAnimation[] = animationsData[title];
               gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
             ></a-entity>
           </a-marker>
+
+          <!-- <a-nft
+            id="celulaAnimalMarker"
+            type="nft"
+            url="/assets/nft/nft-marker"
+            scale="0 0 0"
+            smooth="true"
+            emitevents="true"
+            smoothCount="10"
+            smoothTolerance=".01"
+            smoothThreshold="5"
+            raycaster="objects: .clickable"
+            cursor="fuse: false; rayOrigin: mouse;"
+          >
+            <a-entity
+              id="animatedModel"
+              position="0 0.5 -0.1"
+              rotation="0 90 0"
+              scale="10 10 10"
+              animation-mixer="clip: Celula.rest; timeScale: 1"
+              gltf-model="#celula-animal"
+              class="clickable"
+              gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
+            ></a-entity>
+          </a-nft> -->
 
           <a-entity light="type: ambient; color: #fff"></a-entity>
 
