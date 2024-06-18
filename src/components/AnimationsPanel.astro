@@ -93,11 +93,11 @@ const title = Astro.params.title || Astro.props.title;
               class="flex-1 flex min-w-full h-full gap-0 items-center"
             >
               {animation.image ? (
-                <div class="h-full flex-1">
+                <div class="h-44 flex-1">
                   <img
                     src={`/img/animations-panel/${title}/${animation.image}`}
                     alt="Imagen de sección"
-                    class="h-full"
+                    class="h-full object-contain"
                   />
                 </div>
               ) : null}

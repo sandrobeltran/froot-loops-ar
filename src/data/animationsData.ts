@@ -80,7 +80,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
             description: "Descripción de plasmidos",
             label: "Plasmidos",
             loop: "repeat",
-            image: "lisosomas.png"
+            image: "plasmidos.png"
         },
         {
             clip: "Ribosomas",
@@ -128,28 +128,28 @@ export const animationsData: { [key: string]: IAnimation[] } = {
             description: "El retículo endoplasmático es una red de membranas que transporta proteínas y lípidos dentro de la célula. Existen dos tipos: el retículo endoplasmático rugoso (con ribosomas) y el liso (sin ribosomas).",
             label: "Retículo Endoplasmático",
             loop: "repeat",
-            image: "reticulo-endoplasmatico.png"
+            image: "reticulo-endo.png"
         },
         {
             clip: "Golgi",
             description: 'El complejo de Golgi es como el "centro de envío" de la célula. Modifica, empaca y distribuye proteínas y lípidos producidos en la célula, preparándolos para su exportación o uso interno.',
             label: "Aparato de Golgi",
             loop: "repeat",
-            image: "aparato-de-golgi.png"
+            image: "golgi.png"
         },
         {
             clip: "Vacuola",
             description: 'Descripción de la vacuola',
             label: "Vacuola",
             loop: "repeat",
-            image: "aparato-de-golgi.png"
+            image: "vacuola.png"
         },
         {
             clip: "Centriolo",
             description: 'Descripción del Centriolo',
             label: "Centriolo",
             loop: "repeat",
-            image: "aparato-de-golgi.png"
+            image: "centriolo.png"
         },
     ],
     "celula-vegetal": [
@@ -208,7 +208,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
     ],
     "celula-sanguinea": [
         {
-            clip: "Sanguineas",
+            clip: "Celula",
             description: 'Son como los "mensajeros del cuerpo". Las células sanguíneas viajan por todo el cuerpo para llevar oxígeno, nutrientes y ayudar a combatir las enfermedades.',
             label: "Célula Sanguínea",
             loop: "repeat"
