@@ -81,6 +81,7 @@ const {} = Astro.props;
     return (deg * Math.PI) / 180;
   }
 
+  const scene = document.getElementById("scene")
   const celulaAnimalMarker = document.getElementById(
     "celulaAnimalMarker"
   ) as HTMLElement;
@@ -119,6 +120,7 @@ const {} = Astro.props;
   let fadeOutTimer: ReturnType<typeof setTimeout>;
 
   celulaAnimalMarker.addEventListener("markerFound", (e) => {
+    reEnableGestures()
     //? markerFound is triggered just when the .visible property changes from false to true
     // we need to found a way to detect when marker is recovered
     markerIsActive = true;
@@ -132,12 +134,29 @@ const {} = Astro.props;
       `property: scale; from: 0 0 0; to: 1 1 1; dur: ${fadesDuration}`
     );
 
+    let inTimer = setTimeout(() => {
+      target.removeAttribute("animation");
+      clearTimeout(inTimer);
+    }, fadeOutDuration);
+
     rotationSlider.style.display = "flex";
   });
+
+  setInterval(() => {
+    console.log(celulaAnimalMarker.getAttribute("animation"));
+  }, 1000);
+
+  function reEnableGestures(){
+    scene?.setAttribute("gesture-detector", "")
+    celulaAnimalMarker.setAttribute("raycaster", "objects: .clickable")
+    entity.setAttribute("gesture-handler", "minScale: 0.25; maxScale: 10; rotationFactor: 0")
+  }
 
   celulaAnimalMarker.addEventListener("markerLost", (e) => {
     const target = e.target as HTMLElement;
     (target as any).object3D.visible = true;
+
+    reEnableGestures()
 
     if (markerIsActive) {
       lastPosition = {
@@ -151,7 +170,6 @@ const {} = Astro.props;
       fadeOutTimer = setTimeout(() => {
         let currentX = Number((target as any).object3D.position.x).toFixed(3);
         if (animationState === "OUT" && currentX == lastPosition.x) {
-          alert(`current: ${currentX}, last: ${lastPosition.x}`);
           target.setAttribute(
             "animation",
             `property: scale; from: 1 1 1; to: 0 0 0; dur: ${fadesDuration}`
@@ -162,13 +180,16 @@ const {} = Astro.props;
             rotationSlider.style.display = "none";
             (target as any).object3D.visible = false;
 
+            target.removeAttribute("animation");
             window.clearTimeout(hideTimer);
+            window.clearTimeout(fadeOutTimer);
           }, fadesDuration);
-
-          window.clearTimeout(fadeOutTimer);
         } else {
-          (target as any).object3D.visible = false;
-          alert("Position has changed");
+          markerIsActive = true;
+          animationState = "IN";
+          window.clearTimeout(hideTimer);
+          window.clearTimeout(fadeOutTimer);
+          //(target as any).object3D.visible = false;
         }
       }, fadeOutDuration);
     }
