@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        primary: "linear-gradient(180deg, #111E44 -11.11%, #1A2957 100%)",
+        primary: "linear-gradient(180deg, #122662 0%, #1C3A94 332.14%)",
+        radial: "radial-gradient(50% 50% at 50% 50%, #292FC2 0%, #232678 100%)"
       },
       colors: {
         primary: "#111E44",

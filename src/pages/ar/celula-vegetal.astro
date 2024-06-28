@@ -3,6 +3,8 @@ import AnimationsPanel from "../../components/AnimationsPanel.astro";
 import Layout from "../../layouts/Layout.astro";
 import type { IAnimation } from "../../types/customInterfaces";
 import { animationsData } from "../../data/animationsData";
+import { ENTITY_ATTRIBUTES, SCENE_ATTRIBUTES } from "../../constants/main";
+import NewAnimationsPanel from "../../components/NewAnimationsPanel.astro";
 
 const animations: IAnimation[] = animationsData["celula-vegetal"];
 ---
@@ -41,14 +43,7 @@ const animations: IAnimation[] = animationsData["celula-vegetal"];
         class="overflow-hidden relative block w-full h-[calc(100%-16px)] bg-light"
       >
         <a-scene
-          light="defaultLightsEnabled: false"
-          vr-mode-ui="enabled: false;"
-          loading-screen="enabled: false;"
-          renderer="logarithmicDepthBuffer: true;"
-          arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; patternRatio: 0.9"
-          id="scene"
-          embedded
-          gesture-detector
+          {...SCENE_ATTRIBUTES}
         >
           <a-assets>
             <a-asset-item
@@ -85,11 +80,8 @@ const animations: IAnimation[] = animationsData["celula-vegetal"];
               id="animatedModel"
               position="0 0.5 -0.1"
               rotation="0 -90 0"
-              scale="10 10 10"
-              animation-mixer="clip: Celula.rest; timeScale: 1"
               gltf-model="#celula-animal"
-              class="clickable"
-              gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
+              {...ENTITY_ATTRIBUTES}
             ></a-entity>
           </a-marker>
 
@@ -99,7 +91,8 @@ const animations: IAnimation[] = animationsData["celula-vegetal"];
           ></a-entity>
         </a-scene>
       </div>
-      <AnimationsPanel title="celula-vegetal" animations={animations} />
+      <!-- <AnimationsPanel title="celula-vegetal" animations={animations} /> -->
+      <NewAnimationsPanel title="celula-vegetal" animations={animations} />
     </section>
   </main>
 </Layout>

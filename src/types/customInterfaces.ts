@@ -1,7 +1,12 @@
 export interface IAnimation {
-    clip: string;
-    loop?: "repeat" | "once" | "pingpong";
-    label: string;
-    description: string;
-    image?: string
+  clip: string;
+  loop?: "repeat" | "once" | "pingpong";
+  dataSections: IDataSection[];
+}
+
+export interface IDataSection {
+  image?: string;
+  label: string;
+  description: string;
+  reversed?: boolean;
 }
