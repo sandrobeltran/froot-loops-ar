@@ -3,7 +3,8 @@ import AnimationsPanel from "../../components/AnimationsPanel.astro";
 import Layout from "../../layouts/Layout.astro";
 import type { IAnimation } from "../../types/customInterfaces";
 import { animationsData } from "../../data/animationsData";
-
+import { ENTITY_ATTRIBUTES, SCENE_ATTRIBUTES } from "../../constants/main";
+import NewAnimationsPanel from "../../components/NewAnimationsPanel.astro";
 const { title } = Astro.params;
 
 export async function getStaticPaths() {
@@ -35,13 +36,22 @@ export async function getStaticPaths() {
     {
       params: { title: "prueba" },
     },
+    {
+      params: { title: "emission" },
+    },
+    {
+      params: { title: "bsdf" },
+    }, //? take a decision about what renderer to use
+    {
+      params: { title: "celula-eucariota" },
+    },
   ];
 }
 
 const animations: IAnimation[] = animationsData[title];
 ---
 
-<Layout title={title!}>
+<Layout title={animations[0].dataSections[0].label!}>
   <main class="h-full bg-primary">
     <section class="h-full relative px-4 pb-4 flex flex-col">
       <img
@@ -74,16 +84,7 @@ const animations: IAnimation[] = animationsData[title];
       <div
         class="overflow-hidden relative block w-full h-[calc(100%-16px)] bg-light"
       >
-        <a-scene
-          light="defaultLightsEnabled: false"
-          vr-mode-ui="enabled: false;"
-          loading-screen="enabled: false;"
-          renderer="logarithmicDepthBuffer: true;"
-          arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; patternRatio: 0.9"
-          id="scene"
-          embedded
-          gesture-detector
-        >
+        <a-scene {...SCENE_ATTRIBUTES}>
           <a-assets>
             <a-asset-item id="celula-animal" src=`/assets/${title}/model.glb`
             ></a-asset-item>
@@ -104,7 +105,7 @@ const animations: IAnimation[] = animationsData[title];
             smooth="true"
             scale="0 0 0"
             smoothCount="10"
-            smoothTolerance=".01"
+            smoothTolerance="5"
             smoothThreshold="5"
             raycaster="objects: .clickable"
             cursor="fuse: false; rayOrigin: mouse;"
@@ -113,12 +114,9 @@ const animations: IAnimation[] = animationsData[title];
               id="animatedModel"
               position="0 0.5 -0.1"
               rotation="0 90 0"
-              scale="10 10 10"
-              animation-mixer="clip: Celula.rest; timeScale: 1"
               gltf-model="#celula-animal"
-              class="clickable"
-              gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
-            ></a-entity>
+              {...ENTITY_ATTRIBUTES}
+              ></a-entity>
           </a-marker>
 
           <!-- <a-nft
@@ -146,13 +144,49 @@ const animations: IAnimation[] = animationsData[title];
             ></a-entity>
           </a-nft> -->
 
-          <a-entity light="type: ambient; color: #fff"></a-entity>
+          <a-entity light="type: ambient; color: #fff; intensity: 4"></a-entity>
 
-          <a-entity light="color: #fff; intensity: 1.25" position="0 2 1"
+          <!-- <a-light type="directional" light="castShadow:true;" position="1 1 1" intensity="100" shadow-camera-automatic="#objects"></a-light> -->
+
+          <!-- <a-entity light="color: #fff; intensity: 1" position="0 32 32"
+          ></a-entity> -->
+
+          <!-- <a-light type="directional" light="castShadow:true;" position="1 1 1" intensity="0.5" shadow-camera-automatic="#objects" target="#celulaAnimalMarker">
+
+
+            <a-marker
+            id="celulaAnimalMarker"
+            type="pattern"
+            preset="custom"
+            url="/assets/celula-animal/marker.patt"
+            emitevents="true"
+            smooth="true"
+            scale="0 0 0"
+            smoothCount="10"
+            smoothTolerance="5"
+            smoothThreshold="5"
+            raycaster="objects: .clickable"
+            cursor="fuse: false; rayOrigin: mouse;"
+            visible
+          >
+            <a-entity
+            id="animatedModel"
+            position="0 0.5 -0.1"
+            rotation="0 90 0"
+            scale="10 10 10"
+            animation-mixer="clip: Celula.rest; timeScale: 1"
+            gltf-model="#celula-animal"
+            class="clickable"
+            gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
           ></a-entity>
+        </a-marker>
+
+          </a-light> -->
+
+          <!-- <a-entity light="type: point; color: #fff; intensity: 2" position="0 4 3"></a-entity> -->
         </a-scene>
       </div>
-      <AnimationsPanel animations={animations} />
+      <NewAnimationsPanel animations={animations} />
     </section>
   </main>
 </Layout>

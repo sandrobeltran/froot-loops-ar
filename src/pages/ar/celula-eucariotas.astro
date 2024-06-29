@@ -1,0 +1,98 @@
+---
+import AnimationsPanel from "../../components/AnimationsPanel.astro";
+import Layout from "../../layouts/Layout.astro";
+import type { IAnimation } from "../../types/customInterfaces";
+import { animationsData } from "../../data/animationsData";
+import { ENTITY_ATTRIBUTES, SCENE_ATTRIBUTES } from "../../constants/main";
+
+const animations: IAnimation[] = animationsData["celula-eucariota"];
+---
+
+<Layout title={"Celula Eucariota"}>
+  <main class="h-full bg-primary">
+    <section class="h-full relative px-4 pb-4 flex flex-col">
+      <img
+        src="/ar-bg-leaves.png"
+        alt="Fondo de hojas"
+        class="absolute z-10 top-0 left-0 w-full h-full pointer-events-none"
+      />
+      <nav class="relative z-50 flex items-center py-3 justify-start">
+        <a
+          href="#"
+          id="goBackAnchor"
+          class="flex gap-0 items-center text-light underline"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-10"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+          </svg>
+          Volver
+        </a>
+      </nav>
+      <div
+        class="overflow-hidden relative block w-full h-[calc(100%-16px)] bg-light"
+      >
+        <a-scene
+          {...SCENE_ATTRIBUTES}
+        >
+          <a-assets>
+            <a-asset-item
+              id="celula-animal"
+              src=`/assets/celula-eucariota/model.glb`></a-asset-item>
+          </a-assets>
+          <a-camera
+            scale="1 1 1"
+            position="0 0 0"
+            look-controls="enabled: false"
+          >
+          </a-camera>
+
+          <!--  <a-entity id="rig" position="0 0 0">
+            <a-camera id="camera"></a-camera>
+          </a-entity> -->
+
+          <a-marker
+            id="celulaAnimalMarker"
+            type="pattern"
+            preset="custom"
+            url="/assets/celula-animal/marker.patt"
+            emitevents="true"
+            smooth="true"
+            scale="0 0 0"
+            smoothCount="10"
+            smoothTolerance="5"
+            smoothThreshold="5"
+            raycaster="objects: .clickable"
+            cursor="fuse: false; rayOrigin: mouse;"
+            visible
+          >
+            <a-entity
+              id="animatedModel"
+              position="0 0.5 -0.1"
+              rotation="0 90 0"
+              gltf-model="#celula-animal"
+              {...ENTITY_ATTRIBUTES}
+            ></a-entity>
+          </a-marker>
+
+          <a-entity light="type: ambient; color: #fff"></a-entity>
+
+          <a-entity light="color: #fff; intensity: 1.25" position="0 2 1"
+          ></a-entity>
+        </a-scene>
+      </div>
+      <AnimationsPanel title="celula-eucariota" animations={animations} />
+    </section>
+  </main>
+</Layout>
+
+<script src="../../scripts/title.js"></script>

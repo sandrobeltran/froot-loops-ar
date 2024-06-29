@@ -1,0 +1,453 @@
+---
+import { type IAnimation } from "../types/customInterfaces";
+import RotationSlider from "./RotationSlider.astro";
+import handleParseModelName from "../utils/handleParseModelName";
+
+interface Props {
+  animations: IAnimation[];
+  inactive?: boolean;
+  title?: string;
+}
+
+const { animations } = Astro.props;
+const title = Astro.params.title || Astro.props.title;
+---
+
+<div
+  id="slidersWrapper"
+  class="w-screen flex flex-col items-center justify-end gap-0 fixed z-[9999] bottom-0 left-0"
+>
+  <RotationSlider />
+
+  <!-- INFORMATION PANEL -->
+  <div
+    class="animate-[panelBlink_3s_ease-in-out_infinite] transition-all w-full bg-radial text-light rounded-t-3xl left-0 max-h-20 relative -bottom-4 h-[45%] border-4 border-light border-b-0 p-3 flex flex-col items-center justify-start gap-4"
+  >
+    <div
+      id="swipable-area"
+      class="text-center flex flex-col items-center w-full"
+    >
+      <div class="w-24 h-2 bg-light/40 rounded-full"></div>
+      <p class="text-light/40 font-medium">Deslizar arriba</p>
+    </div>
+
+    <div
+      class="w-full overflow-x-hidden content-wrapper origin-top transition-transform flex-1 overflow-y-auto pb-6"
+    >
+      <!-- WRAPPER -->
+      <div
+        id="animationWrapper"
+        data-title={title}
+        style={{ width: `${animations.length * 100}%` }}
+        class="flex h-fit transition-all items-start"
+      >
+        {
+          animations.map((animation) => (
+            <div
+              class="w-full h-fit"
+              data-clip={animation.clip}
+              data-loop={animation.loop}
+            >
+              <div class="w-full flex h-fit flex-col gap-8">
+                {animation.dataSections?.map((section) => (
+                  <div
+                    style={
+                      section.reversed ? { flexDirection: "row-reverse" } : {}
+                    }
+                    class="flex-1 flex min-w-full h-fit gap-0 items-center"
+                  >
+                    {section.image ? (
+                      <div class="h-44 flex-1">
+                        <img
+                          src={`/img/animations-panel/${title}/${section.image}`}
+                          alt="Imagen de sección"
+                          class="h-full object-contain"
+                        />
+                      </div>
+                    ) : null}
+                    <div
+                      class:list={[
+                        "flex-1 h-full flex gap-1 flex-col p-1 overflow-y-auto",
+                        { "w-full text-center items-center overflow-y-visible": !section.image },
+                        { "text-right": section.reversed },
+                      ]}
+                    >
+                      <h4 class="text-light leading-tight text-xl font-bold">
+                        {section.label}
+                      </h4>
+                      <p class:list={[
+                        "text-light/80 max-h-28 text-sm",
+                        {"max-h-[unset]": !section.image}
+                      ]}>
+                        {section.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- AIMATION SLIDER -->
+  <div
+    id="animationsPanel"
+    class="w-full shadow-[0_-10px_12px_#0004] flex gap-0 p-3 h-20 items-center bg-primary z-50 left-0 justify-between"
+  >
+    <button
+      id="prevAnimationBtn"
+      class="h-full z-20 transition-all hover:scale-110 active:scale-90 w-fit font-bold text-xl text-light"
+    >
+      <svg
+        class="h-full"
+        viewBox="0 0 133 122"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="133" height="116" rx="17" fill="white"></rect>
+        <g filter="url(#filter0_d_1080_3306)">
+          <path
+            d="M87 21.9023L87 92.1043C86.998 92.8151 86.8201 93.5118 86.4854 94.1194C86.1508 94.7271 85.672 95.2226 85.1008 95.5528C84.5295 95.883 83.8874 96.0352 83.2434 95.9932C82.5995 95.9511 81.9781 95.7163 81.4463 95.3141L35.4309 60.2131C33.523 58.7584 33.523 55.2561 35.4309 53.7975L81.4463 18.6965C81.977 18.2902 82.5987 18.0519 83.2437 18.0076C83.8887 17.9632 84.5324 18.1145 85.1049 18.445C85.6774 18.7754 86.1567 19.2724 86.4908 19.8819C86.8249 20.4915 87.001 21.1903 87 21.9023Z"
+            fill="#1E2C56"></path>
+        </g>
+        <defs>
+          <filter
+            id="filter0_d_1080_3306"
+            x="17.2981"
+            y="9.64903"
+            width="86.4039"
+            height="111.404"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"></feColorMatrix>
+            <feOffset dy="8.35097"></feOffset>
+            <feGaussianBlur stdDeviation="8.35097"></feGaussianBlur>
+            <feComposite in2="hardAlpha" operator="out"></feComposite>
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+            ></feColorMatrix>
+            <feBlend
+              mode="normal"
+              in2="BackgroundImageFix"
+              result="effect1_dropShadow_1080_3306"></feBlend>
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="effect1_dropShadow_1080_3306"
+              result="shape"></feBlend>
+          </filter>
+        </defs>
+      </svg>
+    </button>
+
+    <div
+      class="flex-1 text-center text-light font-semibold"
+      id="currentAnimationLabel"
+    >
+      {handleParseModelName(title)}
+    </div>
+
+    <!-- MODAL ANIMATIONS INFORMATION -->
+    <!-- <div class="hidden w-full overflow-x-hidden">
+      <div
+        id="animationWrapper"
+        data-title={title}
+        style={{ minWidth: `${animations.length}%` }}
+        class="flex transition-transform items-center"
+      >
+        {
+          animations.map((animation) => (
+            <div
+              data-clip={animation.clip}
+              data-loop={animation.loop}
+              class="flex-1 flex min-w-full h-full gap-0 items-center"
+            >
+              {animation.image ? (
+                <div class="h-44 flex-1">
+                  <img
+                    src={`/img/animations-panel/${title}/${animation.image}`}
+                    alt="Imagen de sección"
+                    class="h-full object-contain"
+                  />
+                </div>
+              ) : null}
+              <div
+                class="flex-1 h-full flex gap-1 flex-col overflow-y-auto"
+                style={
+                  !animation.image
+                    ? { textAlign: "center", alignItems: "center" }
+                    : {}
+                }
+              >
+                <h4 class="text-light leading-tight text-xl font-bold">
+                  {animation.label}
+                </h4>
+                <p class="text-light/80 max-h-28 text-sm max-w-[90%]">
+                  {animation.description}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div> -->
+
+    <button
+      id="nextAnimationBtn"
+      class="h-full z-20 transition-all hover:scale-110 active:scale-90 w-fit font-bold text-xl text-light"
+    >
+      <svg
+        class="h-full -scale-x-100"
+        viewBox="0 0 133 122"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="133" height="116" rx="17" fill="white"></rect>
+        <g filter="url(#filter0_d_1080_3306)">
+          <path
+            d="M87 21.9023L87 92.1043C86.998 92.8151 86.8201 93.5118 86.4854 94.1194C86.1508 94.7271 85.672 95.2226 85.1008 95.5528C84.5295 95.883 83.8874 96.0352 83.2434 95.9932C82.5995 95.9511 81.9781 95.7163 81.4463 95.3141L35.4309 60.2131C33.523 58.7584 33.523 55.2561 35.4309 53.7975L81.4463 18.6965C81.977 18.2902 82.5987 18.0519 83.2437 18.0076C83.8887 17.9632 84.5324 18.1145 85.1049 18.445C85.6774 18.7754 86.1567 19.2724 86.4908 19.8819C86.8249 20.4915 87.001 21.1903 87 21.9023Z"
+            fill="#1E2C56"></path>
+        </g>
+        <defs>
+          <filter
+            id="filter0_d_1080_3306"
+            x="17.2981"
+            y="9.64903"
+            width="86.4039"
+            height="111.404"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"></feColorMatrix>
+            <feOffset dy="8.35097"></feOffset>
+            <feGaussianBlur stdDeviation="8.35097"></feGaussianBlur>
+            <feComposite in2="hardAlpha" operator="out"></feComposite>
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+            ></feColorMatrix>
+            <feBlend
+              mode="normal"
+              in2="BackgroundImageFix"
+              result="effect1_dropShadow_1080_3306"></feBlend>
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="effect1_dropShadow_1080_3306"
+              result="shape"></feBlend>
+          </filter>
+        </defs>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .panel-active {
+    max-height: 24rem;
+
+    animation: none;
+  }
+
+  @keyframes panelBlink {
+    0%,
+    10%,
+    20%,
+    30%,
+    100% {
+      transform: translateY(0);
+    }
+    5% {
+      transform: translateY(-15px);
+    }
+    15% {
+      transform: translateY(-10px);
+    }
+    25% {
+      transform: translateY(-5px);
+    }
+  }
+</style>
+
+<script>
+  import { fade } from "astro:transitions";
+
+  const nextAnimationBtn = document.getElementById("nextAnimationBtn")!;
+  const prevAnimationBtn = document.getElementById("prevAnimationBtn")!;
+  const animationWrapper = document.getElementById("animationWrapper")!;
+  const animations = Array.from(animationWrapper.querySelectorAll("&>div"));
+  const model = document.getElementById("animatedModel");
+  let canSlide = true;
+  let coolDownTime = 500;
+  let animationDuration = 330; // 330
+  let animationState: "in" | "out" = "in";
+
+  let index = 0;
+  const amountOfAnimations = animationWrapper!.childElementCount;
+
+  function updateWrapperTranslate(index: number) {
+    const newHeight = animations[index].clientHeight + 20
+    document.getElementById("animationWrapper")!.style.maxHeight = `${newHeight}px`
+
+
+    let translate = `translateX(-${index * (100 / amountOfAnimations)}%)`;
+
+    animationWrapper!.style.transform = translate;
+
+    canSlide = false;
+    let timer: ReturnType<typeof setTimeout>;
+
+    timer = setTimeout(() => {
+      canSlide = true;
+      clearTimeout(timer);
+    }, coolDownTime);
+  }
+
+  function checkDisplays() {
+    if (index >= amountOfAnimations - 1) {
+      nextAnimationBtn.style.opacity = "0";
+    } else {
+      nextAnimationBtn.style.opacity = "1";
+    }
+
+    if (index <= 0) {
+      prevAnimationBtn.style.opacity = "0";
+    } else {
+      prevAnimationBtn.style.opacity = "1";
+    }
+  }
+
+  function nextAnimationHandler() {
+    if (!canSlide) return;
+    if (index >= amountOfAnimations - 1) return;
+
+    index++;
+
+    checkDisplays();
+    updateWrapperTranslate(index);
+    updateAnimationMixer();
+  }
+
+  nextAnimationBtn.addEventListener("click", nextAnimationHandler);
+
+  function prevAnimationHandler() {
+    if (!canSlide) return;
+    if (index <= 0) return;
+
+    index--;
+
+    checkDisplays();
+    updateWrapperTranslate(index);
+    updateAnimationMixer();
+  }
+
+  prevAnimationBtn.addEventListener("click", prevAnimationHandler);
+
+  function resumeAnimation() {
+    (model as any).play();
+
+    prevAnimationBtn.removeEventListener("click", resumeAnimation);
+    nextAnimationBtn.removeEventListener("click", resumeAnimation);
+  }
+
+  const title = animationWrapper.getAttribute("data-title");
+
+  function updateAnimationMixer() {
+    const currentAnimation = model!.getAttribute(
+      "animation-mixer"
+    ) as unknown as {
+      clip: string;
+      loop: "repeat" | "once" | "pingpong";
+    };
+
+    //? harcoding celula eucariota
+    // if (index === 0 && title === "celula-eucariota") {
+    // model?.setAttribute("rotation", "0 90 45");
+    // } else if (index !== 0 && title === "celula-eucariota") {
+    // model?.setAttribute("rotation", "0 -90 0");
+    // } else {
+    // model?.setAttribute("rotation", "0 90 45");
+    // }
+
+    console.log(`Exiting ${currentAnimation.clip}`);
+    model!.setAttribute(
+      "animation-mixer",
+      `clip: ${currentAnimation.clip.split(".")[0]}.out; loop: once; clampWhenFinished: true`
+    );
+
+    const clip = animations[index].getAttribute("data-clip") || "NoClip";
+    const loop = animations[index].getAttribute("data-loop") || "repeat";
+
+    let timer = setTimeout(() => {
+      playAnimationClip(clip, loop);
+      clearTimeout(timer);
+    }, animationDuration);
+  }
+
+  function playAnimationClip(clip: string, loop: string) {
+    if (index !== 0) {
+      console.log(`Entering ${clip}...`);
+      model!.setAttribute(
+        "animation-mixer",
+        `clip: ${clip}.in; loop: once; clampWhenFinished: true`
+      );
+    }
+
+    let timer = setTimeout(() => {
+      console.log(`Staying on ${clip}...`);
+
+      if (index === 0) {
+        model!.setAttribute(
+          "animation-mixer",
+          `clip: ${clip}.rest; loop: repeat`
+        );
+      } else {
+        model!.setAttribute(
+          "animation-mixer",
+          `clip: ${clip}.idle; loop: repeat`
+        );
+      }
+
+      clearTimeout(timer);
+    }, animationDuration);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    checkDisplays();
+    updateWrapperTranslate(index);
+    updateAnimationMixer();
+  });
+</script>
+
+<script>
+  const slidersWrapper = document.getElementById(
+    "slidersWrapper"
+  ) as HTMLElement;
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const isBrave = (navigator as any).brave;
+
+    if (isBrave && slidersWrapper) {
+      slidersWrapper.style.bottom = "0%";
+    } else {
+      slidersWrapper.style.bottom = "0%";
+    }
+  });
+</script>
+
+<script src="../scripts/handleSwipes.js"></script>

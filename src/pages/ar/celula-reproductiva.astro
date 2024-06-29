@@ -2,6 +2,8 @@
 import AnimationsPanel from "../../components/AnimationsPanel.astro";
 import Layout from "../../layouts/Layout.astro";
 import { celulaReproductivaAnimations } from "../../data/animationsData";
+import { ENTITY_ATTRIBUTES, SCENE_ATTRIBUTES } from "../../constants/main";
+import NewAnimationsPanel from "../../components/NewAnimationsPanel.astro";
 ---
 
 <Layout title={"Células Reproductivas"}>
@@ -37,16 +39,7 @@ import { celulaReproductivaAnimations } from "../../data/animationsData";
       <div
         class="overflow-hidden relative block w-full h-[calc(100%-16px)] bg-light"
       >
-        <a-scene
-          light="defaultLightsEnabled: false"
-          vr-mode-ui="enabled: false;"
-          loading-screen="enabled: false;"
-          renderer="logarithmicDepthBuffer: true;"
-          arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; patternRatio: 0.9"
-          id="scene"
-          embedded
-          gesture-detector
-        >
+        <a-scene {...SCENE_ATTRIBUTES}>
           <a-assets>
             <a-asset-item
               id="espermatozoide-model"
@@ -74,13 +67,18 @@ import { celulaReproductivaAnimations } from "../../data/animationsData";
             smooth="true"
             scale="0 0 0"
             smoothCount="10"
-            smoothTolerance=".01"
+            smoothTolerance="5"
             smoothThreshold="5"
             raycaster="objects: .clickable"
             cursor="fuse: false; rayOrigin: mouse;"
             visible
           >
-            <a-entity id="animatedModel" rotation="0 90 0">
+            <a-entity
+              id="animatedModel"
+              rotation="0 90 0"
+              {...ENTITY_ATTRIBUTES}
+              scale="1 1 1"
+            >
               <!-- ESPERMATOZOIDE -->
               <a-entity
                 id="espermatozoideAnimated"
@@ -113,8 +111,11 @@ import { celulaReproductivaAnimations } from "../../data/animationsData";
           ></a-entity>
         </a-scene>
       </div>
-      <AnimationsPanel
-        inactive={true}
+      <!-- <AnimationsPanel
+        animations={celulaReproductivaAnimations}
+      /> -->
+      <NewAnimationsPanel
+        title="Celulas Reproductivas"
         animations={celulaReproductivaAnimations}
       />
 
