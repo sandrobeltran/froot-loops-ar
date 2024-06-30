@@ -74,6 +74,7 @@ const {} = Astro.props;
 
 <script>
   let tutorialShowed = false;
+  let infoPanelShowed = false;
   let rotationTutorialTime = 8000;
   let fadesDuration = 300;
   let fadeOutDuration = 5000;
@@ -121,6 +122,12 @@ const {} = Astro.props;
   let fadeOutTimer: ReturnType<typeof setTimeout>;
 
   celulaAnimalMarker.addEventListener("markerFound", (e) => {
+    if (!infoPanelShowed) {
+      document.getElementById("swipable-area")!.parentElement!.classList.add("panel-active");
+
+      infoPanelShowed = true;
+    }
+
     if (!tutorialShowed) {
       console.log("Showing rotationTutorial the first time");
       document.getElementById("rotationTutorial")!.style.display = "flex";

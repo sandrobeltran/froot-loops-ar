@@ -11,6 +11,7 @@ export const SCENE_ATTRIBUTES = {
 };
 
 export const ENTITY_ATTRIBUTES = {
+  position: "0 0 0",
   scale: "10 10 10",
   "animation-mixer": "clip: Celula.rest; timeScale: 1",
   class: "clickable",
