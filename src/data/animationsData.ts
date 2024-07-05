@@ -20,7 +20,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
         {
           description:
             "Contiene un núcleo definido que alberga el material genético (ADN).",
-          image: "nucleo.png",
+          image: "nucleo.webp",
           label: "Núcleo",
         },
       ],
@@ -30,7 +30,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "lisosomas.png",
+          image: "lisosomas.webp",
           description:
             "Puede contener lisosomas, organelos encargados de la digestión celular y la eliminación de desechos.",
           label: "Lisosomas",
@@ -42,7 +42,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "mitocondria.png",
+          image: "mitocondria.webp",
           description:
             'Las mitocondrias son los "generadores de energía" de la célula animal. Producen ATP, la fuente principal de energía celular, mediante un proceso llamado respiración celular.',
           label: "Mitocondria",
@@ -54,7 +54,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "ribosomas.png",
+          image: "ribosomas.webp",
           description:
             'Los ribosomas son los "constructores de proteínas" de la célula animal. Participan en la síntesis de proteínas utilizando las instrucciones codificadas en el ARN mensajero.',
           label: "Ribosomas",
@@ -66,7 +66,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "reticulo-endoplasmatico.png",
+          image: "reticulo-endoplasmatico.webp",
           description:
             "El retículo endoplasmático es una red de membranas que transporta proteínas y lípidos dentro de la célula. Existen dos tipos: el retículo endoplasmático rugoso (con ribosomas) y el liso (sin ribosomas).",
           label: "Retículo Endoplasmático",
@@ -79,7 +79,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "aparato-de-golgi.png",
+          image: "aparato-de-golgi.webp",
           description:
             'El complejo de Golgi es como el "centro de envío" de la célula. Modifica, empaca y distribuye proteínas y lípidos producidos en la célula, preparándolos para su exportación o uso interno.',
           label: "Aparato de Golgi",
@@ -91,7 +91,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "vacuola.png",
+          image: "vacuola.webp",
           description: "Descripción de la vacuola",
           label: "Vacuola",
         },
@@ -102,7 +102,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "centriolo.png",
+          image: "centriolo.webp",
           description:
             "Presenta centríolos, que son importantes en la división celular.",
           label: "Centriolo",
@@ -128,7 +128,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       dataSections: [
         {
           description: "Descripción de nucleoide",
-          image: "nucleoide.png",
+          image: "nucleoide.webp",
           label: "Nucleoide",
         },
       ],
@@ -140,7 +140,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
         {
           description: "Descripción de plasmidos",
           label: "Plasmidos",
-          image: "plasmidos.png",
+          image: "plasmidos.webp",
         },
       ],
     },
@@ -152,7 +152,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
           description:
             'Los ribosomas son los "constructores de proteínas" de la célula animal. Participan en la síntesis de proteínas utilizando las instrucciones codificadas en el ARN mensajero.',
           label: "Ribosomas",
-          image: "ribosomas.png",
+          image: "ribosomas.webp",
         },
       ],
     },
@@ -176,7 +176,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
           description:
             "Contiene un núcleo definido que alberga el material genético (ADN).",
           label: "Núcleo",
-          image: "nucleo.png",
+          image: "nucleo.webp",
         },
       ],
     },
@@ -188,7 +188,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
           description:
             "Puede contener lisosomas, organelos encargados de la digestión celular y la eliminación de desechos.",
           label: "Lisosomas",
-          image: "lisosomas.png",
+          image: "lisosomas.webp",
         },
       ],
     },
@@ -200,7 +200,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
           description:
             'Las mitocondrias son los "generadores de energía" de la célula animal. Producen ATP, la fuente principal de energía celular, mediante un proceso llamado respiración celular.',
           label: "Mitocondria",
-          image: "mitocondria.png",
+          image: "mitocondria.webp",
         },
       ],
     },
@@ -212,7 +212,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
           description:
             'Los ribosomas son los "constructores de proteínas" de la célula animal. Participan en la síntesis de proteínas utilizando las instrucciones codificadas en el ARN mensajero.',
           label: "Ribosomas",
-          image: "ribosomas.png",
+          image: "ribosomas.webp",
         },
       ],
     },
@@ -224,7 +224,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
           description:
             "El retículo endoplasmático es una red de membranas que transporta proteínas y lípidos dentro de la célula. Existen dos tipos: el retículo endoplasmático rugoso (con ribosomas) y el liso (sin ribosomas).",
           label: "Retículo Endoplasmático",
-          image: "reticulo-endo.png",
+          image: "reticulo-endo.webp",
         },
       ],
     },
@@ -236,7 +236,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
           description:
             'El complejo de Golgi es como el "centro de envío" de la célula. Modifica, empaca y distribuye proteínas y lípidos producidos en la célula, preparándolos para su exportación o uso interno.',
           label: "Aparato de Golgi",
-          image: "golgi.png",
+          image: "golgi.webp",
         },
       ],
     },
@@ -247,7 +247,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
         {
           description: "Descripción de la vacuola",
           label: "Vacuola",
-          image: "vacuola.png",
+          image: "vacuola.webp",
         },
       ],
     },
@@ -258,7 +258,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
         {
           description: "Descripción del Centriolo",
           label: "Centriolo",
-          image: "centriolo.png",
+          image: "centriolo.webp",
         },
       ],
     },
@@ -279,7 +279,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "nucleo.png",
+          image: "nucleo.webp",
           description: "Contiene un núcleo que alberga el material genético.",
           label: "Núcleo",
         },
@@ -290,7 +290,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "cloroplastos.png",
+          image: "cloroplastos.webp",
           description:
             "Contiene cloroplastos, organelos que contienen clorofila y son esenciales para la fotosíntesis.",
           label: "Cloroplastos",
@@ -302,7 +302,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "vacuola-central.png",
+          image: "vacuola-central.webp",
           description:
             "Presenta una gran vacuola central que almacena agua, nutrientes y desechos.",
           label: "Vacuola Central",
@@ -314,7 +314,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "reticulo-endoplasmatico.png",
+          image: "reticulo-endoplasmatico.webp",
           description:
             "Al igual que en la célula animal, la célula vegetal también posee retículo endoplasmático. Este sistema de membranas ayuda en la síntesis de proteínas y lípidos, transportando materiales a través de la célula.",
           label: "Retículo Endoplasmático",
@@ -326,7 +326,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "ribosomas.png",
+          image: "ribosomas.webp",
           description:
             "Los ribosomas en la célula vegetal participan en la síntesis de proteínas, ayudando a construir las estructuras esenciales para el funcionamiento celular.",
           label: "Ribosomas",
@@ -338,7 +338,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "aparato-de-golgi.png",
+          image: "aparato-de-golgi.webp",
           description:
             "El complejo de Golgi en la célula vegetal modifica, empaca y distribuye proteínas y lípidos. Juega un papel crucial en la secreción y el transporte de sustancias dentro y fuera de la célula.",
           label: "Aparato de Golgi",
@@ -350,7 +350,7 @@ export const animationsData: { [key: string]: IAnimation[] } = {
       loop: "repeat",
       dataSections: [
         {
-          image: "mitocondria.png",
+          image: "mitocondria.webp",
           description:
             "Las mitocondrias en la célula vegetal, al igual que en la célula animal, son los sitios de producción de energía mediante la respiración celular. Generan ATP para alimentar diversas actividades celulares.",
           label: "Mitocondria",
