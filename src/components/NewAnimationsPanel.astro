@@ -21,70 +21,68 @@ const title = Astro.params.title || Astro.props.title;
 
   <!-- INFORMATION PANEL -->
   <div
-    class="animate-[panelBlink_3s_ease-in-out_infinite] transition-all w-full bg-radial text-light rounded-t-3xl left-0 max-h-20 relative -bottom-4 h-[45%] border-4 border-light border-b-0 p-3 flex flex-col items-center justify-start gap-4"
+    class="transition-all w-full bg-radial text-light rounded-t-3xl left-0 max-h-60 relative -bottom-4 h-[45%] border-4 border-light border-b-0 p-3 flex flex-col items-center justify-start gap-4"
   >
-    <div
+    <!-- <div
       id="swipable-area"
       class="text-center flex flex-col items-center w-full"
     >
       <div class="w-24 h-2 bg-light/40 rounded-full"></div>
       <p class="text-light/40 font-medium">Deslizar arriba</p>
-    </div>
+    </div> -->
 
     <div
-      class="w-full overflow-x-hidden content-wrapper origin-top transition-transform flex-1 overflow-y-auto pb-6"
+      class="w-full max-h-full overflow-x-hidden content-wrapper origin-top flex-1 transition-all overflow-y-auto pb-6"
     >
       <!-- WRAPPER -->
       <div
         id="animationWrapper"
         data-title={title}
         style={{ width: `${animations.length * 100}%` }}
-        class="flex h-fit transition-all items-start"
+        class="flex overflow-hidden h-fit transition-all items-start"
       >
         {
           animations.map((animation) => (
             <div
-              class="w-full h-fit"
               data-clip={animation.clip}
               data-loop={animation.loop}
+              class="w-full flex h-fit flex-col gap-8"
             >
-              <div class="w-full flex h-fit flex-col gap-8">
-                {animation.dataSections?.map((section) => (
-                  <div
-                    style={
-                      section.reversed ? { flexDirection: "row-reverse" } : {}
-                    }
-                    class="flex-1 flex min-w-full h-fit gap-0 items-center"
-                  >
-                    {section.image ? (
-                      <div class="h-44 flex-1">
-                        <img
-                          src={`/img/animations-panel/${title}/${section.image}`}
-                          alt="Imagen de sección"
-                          class="h-full object-contain"
-                        />
-                      </div>
-                    ) : null}
-                    <div
-                      class:list={[
-                        "flex-1 h-full flex gap-1 flex-col p-1 overflow-y-auto",
-                        { "w-full text-center items-center overflow-y-visible": !section.image },
-                        { "text-right": section.reversed },
-                      ]}
-                    >
-                      <h4 class="text-light leading-tight text-xl font-bold">
-                        {section.label}
-                      </h4>
-                      <p class:list={[
-                        "text-light/80 max-h-28 text-sm",
-                        {"max-h-[unset]": !section.image}
-                      ]}>
-                        {section.description}
-                      </p>
+              {animation.dataSections?.map((section) => (
+                <div
+                  style={
+                    section.reversed ? { flexDirection: "row-reverse" } : {}
+                  }
+                  class="flex-1 flex min-w-full h-fit gap-0 items-center"
+                >
+                  {section.image ? (
+                    <div class="h-44 flex-1">
+                      <img
+                        src={`/img/animations-panel/${title}/${section.image}`}
+                        alt="Imagen de sección"
+                        class="h-full object-contain"
+                      />
                     </div>
+                  ) : null}
+                  <div
+                    class:list={[
+                      "flex-1 h-full flex gap-1 flex-col p-1 overflow-y-auto",
+                      {
+                        "w-full text-center items-center overflow-y-visible":
+                          !section.image,
+                      },
+                      { "text-right": section.reversed },
+                    ]}
+                  >
+                    <h4 class="text-light leading-tight text-xl font-bold">
+                      {section.label}
+                    </h4>
+                    <p class:list={["text-light/80 h-fit text-sm"]}>
+                      {section.description}
+                    </p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           ))
         }
@@ -149,13 +147,6 @@ const title = Astro.params.title || Astro.props.title;
         </defs>
       </svg>
     </button>
-
-    <div
-      class="flex-1 text-center text-light font-semibold"
-      id="currentAnimationLabel"
-    >
-      {handleParseModelName(title)}
-    </div>
 
     <!-- MODAL ANIMATIONS INFORMATION -->
     <!-- <div class="hidden w-full overflow-x-hidden">
@@ -264,6 +255,10 @@ const title = Astro.params.title || Astro.props.title;
     animation: none;
   }
 
+  /*
+  animate-[panelBlink_3s_ease-in-out_infinite]
+  */
+
   @keyframes panelBlink {
     0%,
     10%,
@@ -285,8 +280,6 @@ const title = Astro.params.title || Astro.props.title;
 </style>
 
 <script>
-  import { fade } from "astro:transitions";
-
   const nextAnimationBtn = document.getElementById("nextAnimationBtn")!;
   const prevAnimationBtn = document.getElementById("prevAnimationBtn")!;
   const animationWrapper = document.getElementById("animationWrapper")!;
@@ -301,9 +294,9 @@ const title = Astro.params.title || Astro.props.title;
   const amountOfAnimations = animationWrapper!.childElementCount;
 
   function updateWrapperTranslate(index: number) {
-    const newHeight = animations[index].clientHeight + 20
-    document.getElementById("animationWrapper")!.style.maxHeight = `${newHeight}px`
-
+    const newHeight = animations[index].clientHeight;
+    document.getElementById("animationWrapper")!.style.height =
+      `${newHeight}px`;
 
     let translate = `translateX(-${index * (100 / amountOfAnimations)}%)`;
 
@@ -450,4 +443,4 @@ const title = Astro.params.title || Astro.props.title;
   });
 </script>
 
-<script src="../scripts/handleSwipes.js"></script>
+<!-- <script src="../scripts/handleSwipes.js"></script> -->
