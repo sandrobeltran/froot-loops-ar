@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Trial" >
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    loading-screen="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    id="scene"
+    gesture-detector
+  >
+    <a-assets>
+      <a-asset-item id="celula-animal" src="/assets/celula-animal.glb"
+      ></a-asset-item>
+    </a-assets>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <a-marker
+      id="celulaAnimalMarker"
+      type="pattern"
+      preset="custom"
+      url="/assets/celula-animal.patt"
+      emitevents="true"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+      raycaster="objects: .clickable"
+      cursor="fuse: false; rayOrigin: mouse;"
+    >
+      <a-entity
+        id="animatedModel"
+        position="0 0.5 -0.1"
+        rotation="0 90 0"
+        scale="7 7 14"
+        animation-mixer="clip: *;loop: repeat"
+        gltf-model="#celula-animal"
+        class="clickable"
+        gesture-handler="minScale: 0.25; maxScale: 10; rotationFactor: 0"
+      ></a-entity>
+    </a-marker>
+  </a-scene>
+</Layout>

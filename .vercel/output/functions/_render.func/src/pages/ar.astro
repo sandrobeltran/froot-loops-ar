@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { ENTITY_ATTRIBUTES, SCENE_ATTRIBUTES } from "../constants/main";
+---
+
+<Layout title="Marshmalloween">
+  <main class="h-full">
+    <section class="h-full relative flex flex-col">
+      <nav
+        class="h-24 bg-[#E20031] z-50 w-full flex justify-center shadow-xl shadow-stone-900/60 p-2 items-center"
+      >
+        <img src="/logo.png" alt="Partners logos" class="h-3/4" />
+      </nav>
+      <div
+        class="overflow-hidden relative block w-full h-[calc(100%-5rem)] bg-light"
+      >
+        <a-scene {...SCENE_ATTRIBUTES}>
+          <a-assets>
+            <a-asset-item id="mario-model" src=`/assets/models/mario.glb`
+            ></a-asset-item>
+            <a-asset-item id="boo-model" src=`/assets/models/boo.glb`
+            ></a-asset-item>
+            <a-asset-item id="piano-model" src=`/assets/models/mad-piano.glb`
+            ></a-asset-item>
+          </a-assets>
+          <a-camera
+            scale="1 1 1"
+            position="0 0 0"
+            look-controls="enabled: false"
+          >
+          </a-camera>
+
+          <a-marker
+            id="marioMarker"
+            type="pattern"
+            preset="custom"
+            url="/assets/patterns/mario.patt"
+            emitevents="true"
+            smooth="true"
+            scale="0 0 0"
+            smoothCount="10"
+            smoothTolerance="5"
+            smoothThreshold="5"
+            raycaster="objects: .clickable"
+            cursor="fuse: false; rayOrigin: mouse;"
+          >
+            <a-entity
+              id="marioEntity"
+              rotation="-20 0 0"
+              gltf-model="#mario-model"
+              {...ENTITY_ATTRIBUTES}
+              scale=".8 .8 .8"
+              position="0 0 0"></a-entity>
+          </a-marker>
+
+          <a-marker
+            id="madPianoMarker"
+            type="pattern"
+            preset="custom"
+            url="/assets/patterns/mad-piano.patt"
+            emitevents="true"
+            smooth="true"
+            scale="0 0 0"
+            smoothCount="10"
+            smoothTolerance="5"
+            smoothThreshold="5"
+            raycaster="objects: .clickable"
+            cursor="fuse: false; rayOrigin: mouse;"
+          >
+            <a-entity
+              id="pianoEntity"
+              rotation="-20 -90 0"
+              gltf-model="#piano-model"
+              {...ENTITY_ATTRIBUTES}
+              scale=".3 .3 .3"
+              position="0 0 0"></a-entity>
+          </a-marker>
+
+          <a-marker
+            id="booMarker"
+            type="pattern"
+            preset="custom"
+            url="/assets/patterns/boo.patt"
+            emitevents="true"
+            smooth="true"
+            scale="0 0 0"
+            smoothCount="10"
+            smoothTolerance="5"
+            smoothThreshold="5"
+            raycaster="objects: .clickable"
+            cursor="fuse: false; rayOrigin: mouse;"
+          >
+            <a-entity
+              id="booEntity"
+              rotation="-20 0 0"
+              gltf-model="#boo-model"
+              {...ENTITY_ATTRIBUTES}
+              scale=".3 .3 .3"
+              position="0 0 0"></a-entity>
+          </a-marker>
+
+          <a-entity light="type: ambient; color: #fff; intensity: 5"></a-entity>
+        </a-scene>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script src="../scripts/title.js"></script>
