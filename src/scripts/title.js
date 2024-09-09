@@ -20,13 +20,6 @@ function waitForElm(selector) {
   });
 }
 
-const goBackAnchor = document.getElementById("goBackAnchor");
-
-const urlSearchParams = new URLSearchParams(window.location.search);
-const params = Object.fromEntries(urlSearchParams.entries());
-
-goBackAnchor.href = params["cb_url"] || "#";
-
 window.addEventListener("DOMContentLoaded", async () => {
   const video = await waitForElm("#arjs-video");
   const scene = document.querySelector("a-scene");
